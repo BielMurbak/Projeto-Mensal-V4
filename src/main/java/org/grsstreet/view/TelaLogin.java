@@ -11,20 +11,33 @@ public class TelaLogin extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Painel principal com bordas internas
         JPanel painelPrincipal = new JPanel(new BorderLayout(20, 20));
         painelPrincipal.setBorder(BorderFactory.createEmptyBorder(50, 100, 50, 100));
         setContentPane(painelPrincipal);
 
-        // Título no topo
+        // Título e subtítulo no topo
         JLabel titulo = new JLabel("GR's Street", JLabel.CENTER);
         titulo.setFont(new Font("Arial", Font.BOLD, 48));
-        painelPrincipal.add(titulo, BorderLayout.NORTH);
+        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Painel central
+        JLabel subtitulo = new JLabel("Entrar", JLabel.CENTER);
+        subtitulo.setFont(new Font("Arial", Font.PLAIN, 32));
+        subtitulo.setForeground(Color.DARK_GRAY);
+        subtitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JPanel painelTitulo = new JPanel();
+        painelTitulo.setLayout(new BoxLayout(painelTitulo, BoxLayout.Y_AXIS));
+        painelTitulo.add(titulo);
+        painelTitulo.add(Box.createVerticalStrut(30)); // espaçamento maior entre título e subtítulo
+        painelTitulo.add(subtitulo);
+        painelTitulo.add(Box.createVerticalStrut(50)); // espaçamento maior entre subtítulo e campos
+
+        painelPrincipal.add(painelTitulo, BorderLayout.NORTH);
+
+        // Painel central com os campos Email e Senha
         JPanel painelCampos = new JPanel();
         painelCampos.setLayout(new BoxLayout(painelCampos, BoxLayout.Y_AXIS));
-        painelCampos.setBorder(BorderFactory.createEmptyBorder(80, 0, 80, 0));
+        painelCampos.setBorder(BorderFactory.createEmptyBorder(0, 0, 80, 0));
 
         JLabel lblEmail = new JLabel("Email:");
         lblEmail.setFont(new Font("Arial", Font.PLAIN, 22));
@@ -76,6 +89,11 @@ public class TelaLogin extends JFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "Email ou senha incorretos!");
             }
+        });
+
+        btnCadastrar.addActionListener(e -> {
+            dispose(); // Fecha a tela de login
+            new TelaCadastro().setVisible(true); // Abre a tela de cadastro
         });
     }
 

@@ -70,9 +70,10 @@ public class TelaLogin extends JFrame {
             String email = campoEmail.getText();
             String senha = new String(campoSenha.getPassword());
 
-            if (email.equals("admin@email.com") && senha.equals("1234")) {
+            if (email.equals("admin") && senha.equals("1")) {
                 JOptionPane.showMessageDialog(this, "Login bem-sucedido!");
-                // Aqui você pode abrir a próxima tela do sistema
+                new TelaAdm();
+                dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Email ou senha incorretos!");
             }

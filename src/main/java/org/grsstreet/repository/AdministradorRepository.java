@@ -1,14 +1,10 @@
 package org.grsstreet.repository;
 
-
-
 import org.grsstreet.model.user.AdministradorEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-
-
 
 public class AdministradorRepository {
 
@@ -41,6 +37,5 @@ public class AdministradorRepository {
             session.close();
         }
     }
-
 
 }

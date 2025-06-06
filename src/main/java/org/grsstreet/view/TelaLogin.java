@@ -30,23 +30,23 @@ public class TelaLogin extends JFrame {
         JPanel painelTitulo = new JPanel();
         painelTitulo.setLayout(new BoxLayout(painelTitulo, BoxLayout.Y_AXIS));
         painelTitulo.add(titulo);
-        painelTitulo.add(Box.createVerticalStrut(30)); // espaçamento maior entre título e subtítulo
+        painelTitulo.add(Box.createVerticalStrut(30));
         painelTitulo.add(subtitulo);
-        painelTitulo.add(Box.createVerticalStrut(50)); // espaçamento maior entre subtítulo e campos
+        painelTitulo.add(Box.createVerticalStrut(50));
 
         painelPrincipal.add(painelTitulo, BorderLayout.NORTH);
 
-        // Painel central com os campos Email e Senha
+        // Painel central com os campos Usuario e Senha
         JPanel painelCampos = new JPanel();
         painelCampos.setLayout(new BoxLayout(painelCampos, BoxLayout.Y_AXIS));
         painelCampos.setBorder(BorderFactory.createEmptyBorder(0, 0, 80, 0));
 
-        JLabel lblEmail = new JLabel("Email:");
-        lblEmail.setFont(new Font("Arial", Font.PLAIN, 22));
-        JTextField campoEmail = new JTextField();
-        campoEmail.setPreferredSize(new Dimension(800, 40));
-        campoEmail.setMaximumSize(new Dimension(Short.MAX_VALUE, 40));
-        campoEmail.setFont(new Font("Arial", Font.PLAIN, 18));
+        JLabel lblUsuario = new JLabel("Usuário:");
+        lblUsuario.setFont(new Font("Arial", Font.PLAIN, 22));
+        JTextField campoUsuario = new JTextField();
+        campoUsuario.setPreferredSize(new Dimension(800, 40));
+        campoUsuario.setMaximumSize(new Dimension(Short.MAX_VALUE, 40));
+        campoUsuario.setFont(new Font("Arial", Font.PLAIN, 18));
 
         JLabel lblSenha = new JLabel("Senha:");
         lblSenha.setFont(new Font("Arial", Font.PLAIN, 22));
@@ -55,9 +55,9 @@ public class TelaLogin extends JFrame {
         campoSenha.setMaximumSize(new Dimension(Short.MAX_VALUE, 40));
         campoSenha.setFont(new Font("Arial", Font.PLAIN, 18));
 
-        painelCampos.add(lblEmail);
+        painelCampos.add(lblUsuario);
         painelCampos.add(Box.createVerticalStrut(10));
-        painelCampos.add(campoEmail);
+        painelCampos.add(campoUsuario);
         painelCampos.add(Box.createVerticalStrut(30));
         painelCampos.add(lblSenha);
         painelCampos.add(Box.createVerticalStrut(10));
@@ -82,27 +82,25 @@ public class TelaLogin extends JFrame {
 
         // Ação do botão Entrar
         btnEntrar.addActionListener(e -> {
-            String email = campoEmail.getText();
+            String usuario = campoUsuario.getText();
             String senha = new String(campoSenha.getPassword());
 
             AdministradorRepository administradorRepository = new AdministradorRepository();
-               boolean isAdm = administradorRepository.buscarPorSenha(senha);
+            boolean isAdm = administradorRepository.buscarPorSenha(senha);
 
-            if(isAdm==true) {
+            if (isAdm) {
                 JOptionPane.showMessageDialog(this, "Login bem-sucedido!");
                 new TelaAdm();
                 dispose();
-            }
-            else {
-                JOptionPane.showMessageDialog(this, "Email ou senha incorretos!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Usuário ou senha incorretos!");
             }
         });
 
-
-
+        // Ação do botão Cadastrar
         btnCadastrar.addActionListener(e -> {
-            dispose(); // Fecha a tela de login
-            new TelaCadastro().setVisible(true); // Abre a tela de cadastro
+            dispose();
+            new TelaCadastro().setVisible(true);
         });
     }
-    }
+}

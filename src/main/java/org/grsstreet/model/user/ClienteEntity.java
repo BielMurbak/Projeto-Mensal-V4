@@ -1,6 +1,8 @@
 package org.grsstreet.model.user;
 
 
+import org.grsstreet.model.address.EnderecoEntity;
+
 import javax.persistence.*;
 
 @Entity(name = "cliente")
@@ -32,6 +34,19 @@ import javax.persistence.*;
         @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "pessoa_id")
         private PessoaEntity pessoa;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "endereco_id")
+    private EnderecoEntity enderecoEntity;
+
+
+    public EnderecoEntity getEnderecoEntity() {
+        return enderecoEntity;
+    }
+
+    public void setEnderecoEntity(EnderecoEntity enderecoEntity) {
+        this.enderecoEntity = enderecoEntity;
+    }
 
 
         public void setPessoa(PessoaEntity pessoa) {

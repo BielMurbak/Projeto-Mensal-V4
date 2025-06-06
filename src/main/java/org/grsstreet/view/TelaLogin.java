@@ -1,5 +1,7 @@
 package org.grsstreet.view;
 
+import org.grsstreet.repository.AdministradorRepository;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -83,19 +85,24 @@ public class TelaLogin extends JFrame {
             String email = campoEmail.getText();
             String senha = new String(campoSenha.getPassword());
 
-            if (email.equals("admin") && senha.equals("1")) {
+            AdministradorRepository administradorRepository = new AdministradorRepository();
+               boolean isAdm = administradorRepository.buscarPorSenha(senha);
+
+            if(isAdm==true) {
                 JOptionPane.showMessageDialog(this, "Login bem-sucedido!");
                 new TelaAdm();
                 dispose();
-            } else {
+            }
+            else {
                 JOptionPane.showMessageDialog(this, "Email ou senha incorretos!");
             }
         });
+
+
 
         btnCadastrar.addActionListener(e -> {
             dispose(); // Fecha a tela de login
             new TelaCadastro().setVisible(true); // Abre a tela de cadastro
         });
     }
-
-}
+    }

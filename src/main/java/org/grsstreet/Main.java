@@ -10,6 +10,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.exception.ConstraintViolationException;
 
 import javax.swing.SwingUtilities;
 import java.time.LocalDate;
@@ -17,11 +18,13 @@ import java.time.LocalDate;
 public class Main {
     public static void main(String[] args) {
 
+
         try {
             SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
             Session session = sessionFactory.openSession();
 
             session.beginTransaction();
+
 
             ClienteEntity cliente = new ClienteEntity();
             PessoaEntity pessoaCliente = new PessoaEntity();
@@ -63,11 +66,11 @@ public class Main {
             session.close();
             sessionFactory.close();
 
+        } catch (ConstraintViolationException e) {
+            System.err.println("Erro ao salvar os dados: " + e.getMessage());
         } catch (HibernateException e) {
-            System.err.println("Falha ao conectar ou salvar no banco de dados: " + e.getMessage());
-            e.printStackTrace();
-
-        }
+            System.err.println("Erro ao acessar o banco de dados: " + e.getMessage());
+    }
 
         SwingUtilities.invokeLater(() -> {
             new TelaLogin().setVisible(true);

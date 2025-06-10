@@ -56,4 +56,7 @@ import javax.persistence.*;
         public PessoaEntity getPessoa() {
             return pessoa;
         }
+
+    public void setPessoaEntity(PessoaEntity pessoa) {
     }
+}

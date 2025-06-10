@@ -1,11 +1,13 @@
-package org.grsstreet.view;
+package org.grsstreet.view.adm;
+
+import org.grsstreet.view.adm.cliente.CadastrarCliente;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class TelaAdm extends JFrame{
+public class TelaAdmPrincipal extends JFrame{
 
-    public TelaAdm(){
+    public TelaAdmPrincipal(){
         JFrame sistemaAdm = new JFrame ("Sistema Adm GR's street");
         sistemaAdm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         sistemaAdm.setSize(1080,720);
@@ -47,6 +49,12 @@ public class TelaAdm extends JFrame{
             btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
             panelAdm.add(Box.createRigidArea(new Dimension(0,60)));
             panelAdm.add(btn);
+
+            if (texto.equals("1-Cadastrar cliente")) {
+                btn.addActionListener(e -> {
+                    new CadastrarCliente();
+                });
+            }
 
         }
 

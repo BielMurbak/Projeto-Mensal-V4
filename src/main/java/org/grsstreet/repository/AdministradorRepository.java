@@ -1,6 +1,7 @@
 package org.grsstreet.repository;
 
 import org.grsstreet.model.user.AdministradorEntity;
+import org.grsstreet.model.user.PessoaEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -36,6 +37,13 @@ public class AdministradorRepository {
         } finally {
             session.close();
         }
+    }
+    public void salvar(AdministradorEntity administrador) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.save(administrador);
+        session.getTransaction().commit();
+        session.close();
     }
 
 }

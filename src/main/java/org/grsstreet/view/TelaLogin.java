@@ -1,6 +1,7 @@
 package org.grsstreet.view;
 
 import org.grsstreet.repository.AdministradorRepository;
+import org.grsstreet.view.adm.TelaAdmPrincipal;
 
 import javax.swing.*;
 import java.awt.*;
@@ -90,7 +91,7 @@ public class TelaLogin extends JFrame {
 
             if (isAdm) {
                 JOptionPane.showMessageDialog(this, "Login bem-sucedido!");
-                new TelaAdm();
+                new TelaAdmPrincipal();
                 dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Usuário ou senha incorretos!");

@@ -24,7 +24,7 @@ public class ProdutoEntity {
     @Column(name = "preco" ,nullable = false)
     private double preco;
 
-    public ProdutoEntity(String nome, TipoProduto tipo, int quantidade, double preco) {
+    public ProdutoEntity(TipoProduto tipo, String nome,int quantidade, double preco) {
 
         this.tipo = tipo;
         this.nome = nome;

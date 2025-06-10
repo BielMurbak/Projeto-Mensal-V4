@@ -2,6 +2,9 @@ package org.grsstreet;
 
 import org.grsstreet.model.address.EnderecoEntity;
 import org.grsstreet.model.enums.TipoPessoa;
+
+import org.grsstreet.model.enums.TipoProduto;
+import org.grsstreet.model.product.ProdutoEntity;
 import org.grsstreet.model.user.AdministradorEntity;
 import org.grsstreet.model.user.ClienteEntity;
 import org.grsstreet.model.user.PessoaEntity;
@@ -32,6 +35,7 @@ public class Main {
 
             AdministradorEntity adm = new AdministradorEntity();
             PessoaEntity pessoaAdm = new PessoaEntity();
+            ProdutoEntity produto = new ProdutoEntity();
 
             pessoaCliente.setTipo(TipoPessoa.CLIENTE_VAREJO);
             pessoaCliente.setNome("Adryan Jacinto");
@@ -54,9 +58,14 @@ public class Main {
             pessoaAdm.setDataDeNascimento(LocalDate.of(2006, 7, 21));
             adm.setSenha("adm");
 
+            produto.setTipo(TipoProduto.TENIS);
+            produto.setNome("Nike SuperStar");
+            produto.setQuantidade(30);
+            produto.setPreco(439.90);
 
             adm.setPessoaEntity(pessoaAdm);
 
+            session.save(produto);
             session.save(cliente);
             session.save(adm);
 

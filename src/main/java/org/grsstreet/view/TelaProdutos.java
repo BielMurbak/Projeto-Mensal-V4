@@ -10,25 +10,38 @@ import java.util.List;
 
 public class TelaProdutos extends JFrame {
 
-    public TelaProdutos() {
-        setTitle("GR's Street - Produtos");
-        setSize(1080, 720);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    private JTable tabelaProdutos;
+    private DefaultTableModel modeloTabela;
 
-//        ProdutoRepository produtoRepository = new ProdutoRepository();
-//        List<Produto> produtos = produtoRepository.buscarTodos();
-//
-//        String[] colunas = {"ID", "Nome", "Preço", "Descrição"};
-//        DefaultTableModel model = new DefaultTableModel(colunas, 0);
-//
-//        for (Produto p : produtos) {
-//            model.addRow(new Object[]{ p.getId(), p.getTipoProduto(), p.getNome(), p.getQuantidade(), p.getPreco() } );
-//        }
-//
-//        JTable tabela = new JTable(model);
-//        JScrollPane scroll = new JScrollPane(tabela);
-//
-//        add(scroll, BorderLayout.CENTER);
+    public TelaProdutos(List<ProdutoEntity> produtos) {
+        setTitle("Produtos - Tênis Disponíveis");
+        setSize(1080, 720);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        String[] colunas = {"Nome", "Quantidade", "Preço"};
+        modeloTabela = new DefaultTableModel(colunas, 0);
+        tabelaProdutos = new JTable(modeloTabela);
+
+        for (ProdutoEntity produto : produtos) {
+            Object[] linha = {
+                    produto.getNome(),
+                    produto.getQuantidade(),
+                    produto.getPreco()
+            };
+            modeloTabela.addRow(linha);
+        }
+
+        add(new JScrollPane(tabelaProdutos), BorderLayout.CENTER);
+    }
+
+    public static void main(String[] args) {
+        ProdutoRepository produtoRepository = new ProdutoRepository();
+        List<ProdutoEntity> tenis = produtoRepository.listarTenis();
+
+        SwingUtilities.invokeLater(() -> {
+            TelaProdutos tela = new TelaProdutos(tenis);
+            tela.setVisible(true);
+        });
     }
 }

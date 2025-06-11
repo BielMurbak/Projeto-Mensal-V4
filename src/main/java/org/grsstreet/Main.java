@@ -17,6 +17,7 @@ import org.hibernate.exception.ConstraintViolationException;
 
 import javax.swing.SwingUtilities;
 import java.time.LocalDate;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -35,7 +36,6 @@ public class Main {
 
             AdministradorEntity adm = new AdministradorEntity();
             PessoaEntity pessoaAdm = new PessoaEntity();
-            ProdutoEntity produto = new ProdutoEntity();
 
             pessoaCliente.setTipo(TipoPessoa.CLIENTE_VAREJO);
             pessoaCliente.setNome("Adryan Jacinto");
@@ -58,14 +58,19 @@ public class Main {
             pessoaAdm.setDataDeNascimento(LocalDate.of(2006, 7, 21));
             adm.setSenha("adm");
 
-            produto.setTipo(TipoProduto.TENIS);
-            produto.setNome("Nike SuperStar");
-            produto.setQuantidade(30);
-            produto.setPreco(439.90);
+            ProdutoEntity produto1 = new ProdutoEntity(TipoProduto.TENIS, "Adidas SuperStar", 30, 499.99, "src/main/resources/Imagens/Adidas SuperStar.jpg");
+            ProdutoEntity produto2 = new ProdutoEntity(TipoProduto.TENIS, "Nike AirForce 1", 40, 799.99, "src/main/resources/Imagens/Nike Air Force 1.jpg");
+            ProdutoEntity produto3 = new ProdutoEntity(TipoProduto.TENIS, "Puma Smash V2", 10, 439.99, "src/main/resources/Imagens/Puma Smash V2.jpg");
+            ProdutoEntity produto4 = new ProdutoEntity(TipoProduto.TENIS, "New Balance 550", 22, 799.99, "src/main/resources/Imagens/New Balance 550.jpg");
+            ProdutoEntity produto5 = new ProdutoEntity(TipoProduto.TENIS, "Fila Original Fitness Tennis Club", 34, 349.99, "src/main/resources/Imagens/Fila Original Fitness Tennis Club.jpg");
+            ProdutoEntity produto6 = new ProdutoEntity(TipoProduto.TENIS, "Adidas Campus 00s", 70, 699.99, "src/main/resources/Imagens/Adidas Campus 00s.jpg");
 
             adm.setPessoaEntity(pessoaAdm);
 
-            session.save(produto);
+            List<ProdutoEntity> produtos = List.of(produto1, produto2, produto3, produto4, produto5, produto6);
+            for (ProdutoEntity p : produtos) {
+                session.save(p);
+            }
             session.save(cliente);
             session.save(adm);
 

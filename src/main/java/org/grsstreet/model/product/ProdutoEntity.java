@@ -1,10 +1,11 @@
 package org.grsstreet.model.product;
 
 import org.grsstreet.model.enums.TipoProduto;
+
 import javax.persistence.*;
 
 @Entity
-@Table (name = "produto")
+@Table(name = "produto")
 public class ProdutoEntity {
 
     @Id
@@ -15,26 +16,32 @@ public class ProdutoEntity {
     @Column(name = "tipo", nullable = false)
     private TipoProduto tipo;
 
-    @Column(name = "nome",nullable = false)
+    @Column(name = "nome", nullable = false)
     private String nome;
 
-    @Column(name = "quantidade" ,nullable = false)
+    @Column(name = "quantidade", nullable = false)
     private int quantidade;
 
-    @Column(name = "preco" ,nullable = false)
+    @Column(name = "preco", nullable = false)
     private double preco;
 
-    public ProdutoEntity(TipoProduto tipo, String nome,int quantidade, double preco) {
+    @Column(name = "imagem") // novo campo
+    private String imagem; // caminho da imagem (ex: "imagens/nike1.jpg")
 
+    public ProdutoEntity() {
+        // Construtor vazio para o Hibernate
+    }
+
+    public ProdutoEntity(TipoProduto tipo, String nome, int quantidade, double preco, String imagem) {
         this.tipo = tipo;
         this.nome = nome;
         this.quantidade = quantidade;
         this.preco = preco;
-
+        this.imagem = imagem;
     }
 
-    public ProdutoEntity() {
-        // Construtor vazio para o Hibernate
+    public Long getId() {
+        return id;
     }
 
     public TipoProduto getTipo() {
@@ -43,10 +50,6 @@ public class ProdutoEntity {
 
     public void setTipo(TipoProduto tipo) {
         this.tipo = tipo;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public void setId(Long id) {
@@ -77,4 +80,11 @@ public class ProdutoEntity {
         this.preco = preco;
     }
 
+    public String getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
+    }
 }

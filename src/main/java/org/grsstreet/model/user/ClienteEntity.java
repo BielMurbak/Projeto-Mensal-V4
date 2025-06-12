@@ -48,15 +48,13 @@ import javax.persistence.*;
         this.enderecoEntity = enderecoEntity;
     }
 
-
-        public void setPessoa(PessoaEntity pessoa) {
-            this.pessoa = pessoa;
-        }
-
-        public PessoaEntity getPessoa() {
-            return pessoa;
-        }
-
-    public void setPessoaEntity(PessoaEntity pessoa) {
+    public void setPessoa(PessoaEntity pessoa) {
+        this.pessoa = pessoa;
     }
+
+    public PessoaEntity getPessoa() {
+        return pessoa;
+    }
+
+
 }

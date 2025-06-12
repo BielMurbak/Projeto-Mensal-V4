@@ -37,7 +37,7 @@ public class Main {
             AdministradorEntity adm = new AdministradorEntity();
             PessoaEntity pessoaAdm = new PessoaEntity();
 
-            pessoaCliente.setTipo(TipoPessoa.CLIENTE_VAREJO);
+            pessoaCliente.setTipo(TipoPessoa.CLIENTE);
             pessoaCliente.setNome("Adryan Jacinto");
             pessoaCliente.setCpf("279.641.580-40");
             pessoaCliente.setDataDeNascimento(LocalDate.of(2006, 7, 25));

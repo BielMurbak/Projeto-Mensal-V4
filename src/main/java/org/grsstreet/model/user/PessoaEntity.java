@@ -23,7 +23,7 @@ public class PessoaEntity {
     private LocalDate dataDeNascimento;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipo", nullable = false)
+    @Column(name = "tipo", nullable = true)
     private TipoPessoa tipo;
 
     public TipoPessoa getTipo() {

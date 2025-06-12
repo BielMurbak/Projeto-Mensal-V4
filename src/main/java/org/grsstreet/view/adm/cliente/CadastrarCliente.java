@@ -4,6 +4,7 @@ import org.grsstreet.model.address.EnderecoEntity;
 import org.grsstreet.model.user.ClienteEntity;
 import org.grsstreet.model.user.PessoaEntity;
 
+import org.grsstreet.repository.EnderecoRepository;
 import org.grsstreet.repository.PessoaRepository;
 import org.json.JSONObject;
 
@@ -15,6 +16,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class CadastrarCliente {
 
@@ -53,7 +56,7 @@ public class CadastrarCliente {
 
 
 
-        JLabel labelNascimento = new JLabel("Data de Nascimento (dd/mm/aaaa)");
+        JLabel labelNascimento = new JLabel("Data de Nascimento yyyy/mm/dd");
         labelNascimento.setFont(new Font("Arial", Font.PLAIN, 22));
         JTextField campoNascimento = new JTextField();
         campoNascimento.setPreferredSize(new Dimension(300, 60));
@@ -124,49 +127,58 @@ public class CadastrarCliente {
             String dataNascCliente = campoNascimento.getText().trim();
             String senhaCliente = campoSenha.getText().trim();
 
-            try {
-                // Conecta-se à API do ViaCEP para obter os dados de endereço
-                String url = "https://viacep.com.br/ws/" + cepCliente + "/json/";
+            EnderecoEntity enderecoAPI = new EnderecoEntity();
 
-                HttpURLConnection conexao = (HttpURLConnection) new URL(url).openConnection();
-                conexao.setRequestMethod("GET");
+           try {
+              //   Conecta-se à API do ViaCEP para obter os dados de endereço
+              String url = "https://viacep.com.br/ws/" + cepCliente + "/json/";
 
-                BufferedReader reader = new BufferedReader(new InputStreamReader(conexao.getInputStream()));
-                StringBuilder resposta = new StringBuilder();
-                String linha;
+               HttpURLConnection conexao = (HttpURLConnection) new URL(url).openConnection();
+               conexao.setRequestMethod("GET");
+
+                 BufferedReader reader = new BufferedReader(new InputStreamReader(conexao.getInputStream()));
+               StringBuilder resposta = new StringBuilder();
+               String linha;
 
                 while ((linha = reader.readLine()) != null) {
-                    resposta.append(linha);  // Lê e concatena as linhas da resposta
-                }
+               resposta.append(linha);  // Lê e concatena as linhas da resposta
+               }
                 reader.close();
-
                 // Converte a resposta para um objeto JSON
                 JSONObject json = new JSONObject(resposta.toString());
 
-                // Cria um objeto EnderecoAPI e preenche com os dados da API
+                //Cria um objeto EnderecoAPI e preenche com os dados da API
 
-                EnderecoEntity enderecoAPI = new EnderecoEntity();
-                enderecoAPI.setRua(json.getString("logradouro"));
-                enderecoAPI.setBairro(json.getString("bairro"));
-                enderecoAPI.setMunicipio(json.getString("localidade"));
-                enderecoAPI.setEstado(json.getString("uf"));
 
-            } catch (RuntimeException | IOException ex) {
-                throw new RuntimeException(ex);
-            }
+              enderecoAPI.setRua(json.getString("logradouro"));
+             enderecoAPI.setBairro(json.getString("bairro"));
+              enderecoAPI.setMunicipio(json.getString("localidade"));
+             enderecoAPI.setEstado(json.getString("uf"));
+               enderecoAPI.setCep(cepCliente);
+
+       } catch (RuntimeException | IOException ex) {
+               throw new RuntimeException(ex);
+           }
 
             try {
                 PessoaEntity pessoa = new PessoaEntity();
+                EnderecoRepository enderecoRepository  = new EnderecoRepository();
+                PessoaRepository pessoaRepository = new PessoaRepository();
+                ClienteEntity cliente = new ClienteEntity();
+
                 pessoa.setNome(nomeCliente);
                 pessoa.setCpf(cpfCliente);
-                pessoa.setDataDeNascimento(LocalDate.parse(dataNascCliente));
-                PessoaRepository pessoaRepository = new PessoaRepository();
+                enderecoRepository.salvar(enderecoAPI);
+
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+                LocalDate dataNascimento = LocalDate.parse(dataNascCliente, formatter);
+                pessoa.setDataDeNascimento(dataNascimento);
+
                 pessoaRepository.salvar(pessoa);
-
-                ClienteEntity cliente = new ClienteEntity();
                 cliente.setSenha(senhaCliente);
-                cliente.setPessoaEntity(pessoa); // Associa a pessoa ao admin
-
+                cliente.setPessoaEntity(pessoa);
+                cliente.setEnderecoEntity(enderecoAPI);
 
             } catch (RuntimeException ex) {
                 throw new RuntimeException(ex);

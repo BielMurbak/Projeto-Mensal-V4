@@ -25,27 +25,45 @@ public class TelaMenuPrincipal extends JFrame {
 
         painelPrincipal.add(Box.createRigidArea(new Dimension(0, 60))); // Espaço abaixo do título
 
-        // Criando botões
-        String[] textos = {
-                "Produtos",
-                "Carrinho",
-                "Suporte ao Cliente",
-                "Segurança e Privacidade"
-        };
+        // Botão Produtos
+        JButton botaoProdutos = new JButton("Produtos");
+        botaoProdutos.setAlignmentX(Component.CENTER_ALIGNMENT);
+        botaoProdutos.setMaximumSize(new Dimension(500, 70));
+        botaoProdutos.setFont(new Font("Arial", Font.BOLD, 24));
 
-        for (String texto : textos) {
-            JButton botao = new JButton(texto);
-            botao.setAlignmentX(Component.CENTER_ALIGNMENT);
-            botao.setMaximumSize(new Dimension(500, 70));
-            botao.setFont(new Font("Arial", Font.BOLD, 24));
-            painelPrincipal.add(botao);
-            painelPrincipal.add(Box.createRigidArea(new Dimension(0, 30))); // Espaço entre botões
-        }
+        botaoProdutos.addActionListener(e -> {
+            dispose(); // Fecha esta tela
+            new TelaProdutos().setVisible(true); // Abre a tela de produtos
+        });
+
+        painelPrincipal.add(botaoProdutos);
+        painelPrincipal.add(Box.createRigidArea(new Dimension(0, 30)));
+
+        // Botão Carrinho
+        JButton botaoCarrinho = new JButton("Carrinho");
+        botaoCarrinho.setAlignmentX(Component.CENTER_ALIGNMENT);
+        botaoCarrinho.setMaximumSize(new Dimension(500, 70));
+        botaoCarrinho.setFont(new Font("Arial", Font.BOLD, 24));
+        painelPrincipal.add(botaoCarrinho);
+        painelPrincipal.add(Box.createRigidArea(new Dimension(0, 30)));
+
+        // Botão Suporte
+        JButton botaoSuporte = new JButton("Suporte ao Cliente");
+        botaoSuporte.setAlignmentX(Component.CENTER_ALIGNMENT);
+        botaoSuporte.setMaximumSize(new Dimension(500, 70));
+        botaoSuporte.setFont(new Font("Arial", Font.BOLD, 24));
+        painelPrincipal.add(botaoSuporte);
+        painelPrincipal.add(Box.createRigidArea(new Dimension(0, 30)));
+
+        // Botão Segurança
+        JButton botaoSeguranca = new JButton("Segurança e Privacidade");
+        botaoSeguranca.setAlignmentX(Component.CENTER_ALIGNMENT);
+        botaoSeguranca.setMaximumSize(new Dimension(500, 70));
+        botaoSeguranca.setFont(new Font("Arial", Font.BOLD, 24));
+        painelPrincipal.add(botaoSeguranca);
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new TelaMenuPrincipal().setVisible(true);
-        });
+        SwingUtilities.invokeLater(() -> new TelaMenuPrincipal().setVisible(true));
     }
 }

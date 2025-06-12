@@ -10,7 +10,7 @@ import java.util.List;
 public class TelaProdutos extends JFrame {
 
     public TelaProdutos() {
-        setTitle("Produtos Disponíveis");
+        setTitle("GRs Street");
         setSize(1080, 720);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -18,11 +18,18 @@ public class TelaProdutos extends JFrame {
         ProdutoRepository produtoRepo = new ProdutoRepository();
         List<ProdutoEntity> produtos = produtoRepo.listarTodos();
 
-        // Painel principal onde vai o grid de produtos
-        JPanel painelProdutos = new JPanel();
-        painelProdutos.setLayout(new GridLayout(0, 3, 15, 15)); // 3 colunas, espaçamento entre
+        // Painel principal com BorderLayout
+        JPanel painelPrincipal = new JPanel(new BorderLayout());
 
-        // Margem interna no painel principal
+        // Título centralizado no topo
+        JLabel titulo = new JLabel("GR's Street", SwingConstants.CENTER);
+        titulo.setFont(new Font("Arial", Font.BOLD, 36));
+        titulo.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
+        painelPrincipal.add(titulo, BorderLayout.NORTH);
+
+        // Painel de produtos (grid)
+        JPanel painelProdutos = new JPanel();
+        painelProdutos.setLayout(new GridLayout(0, 3, 15, 15));
         painelProdutos.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
         for (ProdutoEntity produto : produtos) {
@@ -44,26 +51,26 @@ public class TelaProdutos extends JFrame {
                 imagemLabel = new JLabel("Imagem não encontrada", SwingConstants.CENTER);
             }
 
-            // Nome, preço e quantidade
+            // Nome, preço e quantidade centralizados
             JLabel nomeLabel = new JLabel(produto.getNome(), SwingConstants.CENTER);
             nomeLabel.setFont(new Font("Arial", Font.BOLD, 16));
             nomeLabel.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
 
             JLabel precoLabel = new JLabel(String.format("R$ %.2f", produto.getPreco()), SwingConstants.CENTER);
             precoLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-            precoLabel.setForeground(new Color(0, 128, 0)); // verde escuro
+            precoLabel.setForeground(new Color(0, 128, 0));
             precoLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
 
             JLabel quantidadeLabel = new JLabel("Quantidade: " + produto.getQuantidade(), SwingConstants.CENTER);
             quantidadeLabel.setFont(new Font("Arial", Font.PLAIN, 14));
             quantidadeLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
 
-            // Botão
+            // Botão "Adicionar ao Carrinho"
             JButton btnAdicionar = new JButton("Adicionar ao Carrinho");
-            btnAdicionar.setPreferredSize(new Dimension(180, 30));
+            btnAdicionar.setMaximumSize(new Dimension(180, 50));
             btnAdicionar.setFocusPainted(false);
 
-            // Painel para info e botão, com BoxLayout vertical
+            // Painel de informações com layout vertical
             JPanel painelInfo = new JPanel();
             painelInfo.setLayout(new BoxLayout(painelInfo, BoxLayout.Y_AXIS));
             painelInfo.add(nomeLabel);
@@ -78,29 +85,40 @@ public class TelaProdutos extends JFrame {
             painelProdutos.add(painelProduto);
         }
 
-        // JScrollPane para rolar a lista de produtos
         JScrollPane scrollPane = new JScrollPane(painelProdutos);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        // Botão fixo "Ir ao Carrinho" na parte inferior
+        // Botão inferior "Ir ao Carrinho"
         JButton btnIrCarrinho = new JButton("Ir ao Carrinho");
-        btnIrCarrinho.setPreferredSize(new Dimension(200, 40));
+        btnIrCarrinho.setFont(new Font("Arial", Font.BOLD, 18));
+        btnIrCarrinho.setPreferredSize(new Dimension(200, 50));
         btnIrCarrinho.setFocusPainted(false);
 
-        // Painel inferior para o botão do carrinho
-        JPanel painelInferior = new JPanel();
-        painelInferior.setLayout(new FlowLayout(FlowLayout.RIGHT, 20, 10));
-        painelInferior.add(btnIrCarrinho);
+        // Botão "Voltar ao Menu"
+        JButton btnVoltarMenu = new JButton("Voltar ao Menu");
+        btnVoltarMenu.setFont(new Font("Arial", Font.BOLD, 18));
+        btnVoltarMenu.setPreferredSize(new Dimension(200, 50));
+        btnVoltarMenu.setFocusPainted(false);
 
-        // Layout da janela: BorderLayout
-        setLayout(new BorderLayout());
-        add(scrollPane, BorderLayout.CENTER);
-        add(painelInferior, BorderLayout.SOUTH);
+        // Ação: Voltar ao menu principal
+        btnVoltarMenu.addActionListener(e -> {
+            dispose(); // Fecha esta janela
+            new TelaMenuPrincipal().setVisible(true); // Abre o menu principal
+        });
+
+        JPanel painelInferior = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
+        painelInferior.add(btnIrCarrinho);
+        painelInferior.add(btnVoltarMenu);
+
+
+        // Adiciona scroll e botão inferior ao painel principal
+        painelPrincipal.add(scrollPane, BorderLayout.CENTER);
+        painelPrincipal.add(painelInferior, BorderLayout.SOUTH);
+
+        setContentPane(painelPrincipal);
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new TelaProdutos().setVisible(true);
-        });
+        SwingUtilities.invokeLater(() -> new TelaProdutos().setVisible(true));
     }
 }

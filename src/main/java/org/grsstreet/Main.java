@@ -62,7 +62,7 @@ public class Main {
             ProdutoEntity produto2 = new ProdutoEntity(TipoProduto.TENIS, "Nike AirForce 1", 40, 799.99, "src/main/resources/Imagens/Nike Air Force 1.jpg");
             ProdutoEntity produto3 = new ProdutoEntity(TipoProduto.TENIS, "Puma Smash V2", 10, 439.99, "src/main/resources/Imagens/Puma Smash V2.jpg");
             ProdutoEntity produto4 = new ProdutoEntity(TipoProduto.TENIS, "New Balance 550", 22, 799.99, "src/main/resources/Imagens/New Balance 550.jpg");
-            ProdutoEntity produto5 = new ProdutoEntity(TipoProduto.TENIS, "Fila Original Fitness Tennis Club", 34, 349.99, "src/main/resources/Imagens/Fila Original Fitness Tennis Club.jpg");
+            ProdutoEntity produto5 = new ProdutoEntity(TipoProduto.TENIS, "Fila Fitness Tennis Club", 34, 349.99, "src/main/resources/Imagens/Fila Fitnnes Tennis Club.jpg");
             ProdutoEntity produto6 = new ProdutoEntity(TipoProduto.TENIS, "Adidas Campus 00s", 70, 699.99, "src/main/resources/Imagens/Adidas Campus 00s.jpg");
 
             adm.setPessoaEntity(pessoaAdm);

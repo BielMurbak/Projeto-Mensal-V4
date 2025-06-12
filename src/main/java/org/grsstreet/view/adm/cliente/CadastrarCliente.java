@@ -1,9 +1,11 @@
 package org.grsstreet.view.adm.cliente;
 
 import org.grsstreet.model.address.EnderecoEntity;
+import org.grsstreet.model.enums.TipoPessoa;
 import org.grsstreet.model.user.ClienteEntity;
 import org.grsstreet.model.user.PessoaEntity;
 
+import org.grsstreet.repository.ClienteRepository;
 import org.grsstreet.repository.EnderecoRepository;
 import org.grsstreet.repository.PessoaRepository;
 import org.json.JSONObject;
@@ -161,24 +163,26 @@ public class CadastrarCliente {
            }
 
             try {
+                PessoaRepository pessoaRepository = new PessoaRepository();
                 PessoaEntity pessoa = new PessoaEntity();
                 EnderecoRepository enderecoRepository  = new EnderecoRepository();
-                PessoaRepository pessoaRepository = new PessoaRepository();
+                ClienteRepository clienteRepository = new ClienteRepository();
                 ClienteEntity cliente = new ClienteEntity();
 
                 pessoa.setNome(nomeCliente);
                 pessoa.setCpf(cpfCliente);
-                enderecoRepository.salvar(enderecoAPI);
-
-
+                pessoa.setTipo(TipoPessoa.CLIENTE);
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
                 LocalDate dataNascimento = LocalDate.parse(dataNascCliente, formatter);
                 pessoa.setDataDeNascimento(dataNascimento);
-
+                enderecoRepository.salvar(enderecoAPI);
                 pessoaRepository.salvar(pessoa);
                 cliente.setSenha(senhaCliente);
-                cliente.setPessoaEntity(pessoa);
+
+                cliente.setPessoa(pessoa);
                 cliente.setEnderecoEntity(enderecoAPI);
+                clienteRepository.salvar(cliente);
+
 
             } catch (RuntimeException ex) {
                 throw new RuntimeException(ex);

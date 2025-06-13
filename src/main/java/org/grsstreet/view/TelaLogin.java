@@ -1,6 +1,7 @@
 package org.grsstreet.view;
 
 import org.grsstreet.repository.AdministradorRepository;
+import org.grsstreet.repository.ClienteRepository;
 import org.grsstreet.view.adm.TelaAdmPrincipal;
 
 import javax.swing.*;
@@ -87,13 +88,20 @@ public class TelaLogin extends JFrame {
             String senha = new String(campoSenha.getPassword());
 
             AdministradorRepository administradorRepository = new AdministradorRepository();
-            boolean isAdm = administradorRepository.buscarPorSenha(senha);
+            ClienteRepository clienteRepository = new ClienteRepository();
 
-            if (isAdm) {
+            boolean isAdm = administradorRepository.buscarPorSenha(senha);
+            boolean isContumer = clienteRepository.buscarPorSenhaCliente(senha);
+
+            if(isAdm){
                 JOptionPane.showMessageDialog(this, "Login bem-sucedido!");
                 new TelaAdmPrincipal();
                 dispose();
-            } else {
+            }else  if(isContumer){
+                JOptionPane.showMessageDialog(this, "Login bem-sucedido!");
+                new TelaMenuPrincipal().setVisible(true);
+                dispose();
+            }else{
                 JOptionPane.showMessageDialog(this, "Usuário ou senha incorretos!");
             }
         });

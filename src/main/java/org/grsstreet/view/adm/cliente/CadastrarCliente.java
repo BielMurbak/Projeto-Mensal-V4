@@ -184,7 +184,17 @@ public class CadastrarCliente {
                 clienteRepository.salvar(cliente);
 
 
+                JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
+
+                campoNome.setText("");
+                campoCpf.setText("");
+                campoCep.setText("");
+                campoNascimento.setText("");
+                campoSenha.setText("");
+
+
             } catch (RuntimeException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao cadastrar cliente: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 throw new RuntimeException(ex);
             }
 

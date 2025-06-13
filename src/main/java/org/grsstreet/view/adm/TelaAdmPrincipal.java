@@ -1,6 +1,7 @@
 package org.grsstreet.view.adm;
 
 import org.grsstreet.view.adm.cliente.CadastrarCliente;
+import org.grsstreet.view.adm.cliente.ListarClientes;
 
 import javax.swing.*;
 import java.awt.*;
@@ -54,8 +55,10 @@ public class TelaAdmPrincipal extends JFrame{
                 btn.addActionListener(e -> {
                     new CadastrarCliente();
                 });
-            }
-
+            }else if(texto.equalsIgnoreCase("2-Listar clientes"));
+            btn.addActionListener(e -> {
+                new ListarClientes();
+            });
         }
 
         JPanel footerPanel = new JPanel();

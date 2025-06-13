@@ -1,8 +1,9 @@
 package org.grsstreet.model.address;
 
 import javax.persistence.*;
+import java.util.List;
 
-@Entity(name = "endereço")
+@Entity(name = "endereco")
 public class EnderecoEntity {
 
     @Id
@@ -31,9 +32,9 @@ public class EnderecoEntity {
         this.estado = estado;
         this.cep = cep;
     }
-
     public EnderecoEntity() {
     }
+
 
 
     public Long getId() {
@@ -83,4 +84,6 @@ public class EnderecoEntity {
     public void setCep(String cep) {
         this.cep = cep;
     }
+
+
 }

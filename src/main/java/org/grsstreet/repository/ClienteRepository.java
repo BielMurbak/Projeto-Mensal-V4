@@ -7,6 +7,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
+import java.util.List;
+
 public class ClienteRepository {
 
     private static final SessionFactory sessionFactory;
@@ -34,6 +36,29 @@ public class ClienteRepository {
         } catch (RuntimeException e) {
             if (transaction != null) transaction.rollback();
             throw new RuntimeException("Erro ao buscar cliente ", e);
+        } finally {
+            session.close();
+        }
+    }
+
+    public List<ClienteEntity> listarTodosClientes() {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+
+            List<ClienteEntity> clientes = session
+                    .createQuery("FROM cliente a JOIN FETCH a.pessoa JOIN FETCH a.enderecoEntity", ClienteEntity.class)
+                    .getResultList();
+
+            transaction.commit();
+
+            return clientes;
+
+        } catch (RuntimeException e) {
+            if (transaction != null) transaction.rollback();
+            throw new RuntimeException("Erro ao listar clientes", e);
         } finally {
             session.close();
         }

@@ -49,7 +49,8 @@ public class PessoaEntity {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
+    public PessoaEntity() {
+    }
 
     public String getCpf() {
         return cpf;

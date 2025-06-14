@@ -8,6 +8,7 @@ import org.grsstreet.model.user.PessoaEntity;
 import org.grsstreet.repository.ClienteRepository;
 import org.grsstreet.repository.EnderecoRepository;
 import org.grsstreet.repository.PessoaRepository;
+import org.grsstreet.view.adm.TelaAdmPrincipal;
 import org.json.JSONObject;
 
 import javax.swing.*;
@@ -122,6 +123,24 @@ public class CadastrarCliente {
         panelAdm.add(Box.createRigidArea(new Dimension(0,60)));
         panelAdm.add(btn);
 
+        JButton btnV = new JButton("Voltar");
+        btnV.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnV.setMaximumSize(new Dimension(300,60));
+        btnV.setPreferredSize(new Dimension (300,60));
+        btnV.setFont(new Font("Arial", Font.BOLD, 20));
+        btnV.setBackground(Color.GRAY);
+        btnV.setForeground(Color.WHITE);
+        btnV.setFocusPainted(false);
+        btnV.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        panelAdm.add(Box.createRigidArea(new Dimension(0, 10)));
+        panelAdm.add(btnV);
+
+        btnV.addActionListener(event ->{
+            JOptionPane.showMessageDialog(null, "Voltando ao menu adm", "Voltando", JOptionPane.INFORMATION_MESSAGE);
+            new TelaAdmPrincipal();
+            sistemaAdm.dispose();
+        });
+
         btn.addActionListener(e -> {
             String nomeCliente = campoNome.getText().trim();
             String cpfCliente = campoCpf.getText().trim();
@@ -198,6 +217,8 @@ public class CadastrarCliente {
                 throw new RuntimeException(ex);
             }
 
+
+
         });
 
         JPanel footerPanel = new JPanel();
@@ -210,6 +231,9 @@ public class CadastrarCliente {
         sistemaAdm.add(panelAdm, BorderLayout.CENTER);
 
         sistemaAdm.setVisible(true);
+    }
+    public static void main(String[] args) {
+        new CadastrarCliente();
     }
 
 }

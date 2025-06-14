@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
+import javax.swing.*;
 import java.util.List;
 
 public class ClienteRepository {
@@ -57,8 +58,10 @@ public class ClienteRepository {
                     session.delete(cliente);
                     transaction.commit();
                     System.out.println("Cliente deletado com sucesso.");
+                    JOptionPane.showMessageDialog(null, "Cliente removido com sucesso!");
                 } else {
                     System.out.println("Cliente não encontrado.");
+                    JOptionPane.showMessageDialog(null, "Erro ao remover cliente " ,"Erro", JOptionPane.ERROR_MESSAGE);
                 }
 
             } catch (Exception e) {

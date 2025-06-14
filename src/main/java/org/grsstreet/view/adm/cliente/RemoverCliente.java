@@ -1,6 +1,7 @@
 package org.grsstreet.view.adm.cliente;
 
 import org.grsstreet.repository.ClienteRepository;
+import org.grsstreet.view.adm.TelaAdmPrincipal;
 
 import javax.swing.*;
 import java.awt.*;
@@ -58,6 +59,26 @@ public class RemoverCliente {
         panelAdm.add(Box.createRigidArea(new Dimension(0, 40)));
         panelAdm.add(btn);
 
+        JButton btnV = new JButton("Voltar");
+        btnV.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnV.setMaximumSize(new Dimension(300,60));
+        btnV.setPreferredSize(new Dimension (300,60));
+        btnV.setFont(new Font("Arial", Font.BOLD, 20));
+        btnV.setBackground(Color.GRAY);
+        btnV.setForeground(Color.WHITE);
+        btnV.setFocusPainted(false);
+        btnV.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        panelAdm.add(Box.createRigidArea(new Dimension(0, 40)));
+        panelAdm.add(btnV);
+
+        btnV.addActionListener(e ->{
+            JOptionPane.showMessageDialog(null, "Voltando ao menu adm", "Voltando", JOptionPane.INFORMATION_MESSAGE);
+           new  TelaAdmPrincipal ();
+            sistemaAdm.dispose();
+        });
+
+
+
 
 
         // Rodapé cinza escuro
@@ -69,19 +90,13 @@ public class RemoverCliente {
 
         // Ação do botão
         btn.addActionListener(e -> {
-            String cpf = campoCPF.getText().trim();
+                    String cpf = campoCPF.getText().trim();
 
-            try {
-                ClienteRepository clienteRepository = new ClienteRepository();
-                clienteRepository.deletarCpfCliente(cpf);
-                JOptionPane.showMessageDialog(null, "Cliente removido com sucesso!");
-                campoCPF.setText("");
+                    ClienteRepository clienteRepository = new ClienteRepository();
+                    clienteRepository.deletarCpfCliente(cpf);
+                    campoCPF.setText("");
+                });
 
-            } catch (RuntimeException ex) {
-                JOptionPane.showMessageDialog(null, "Erro ao remover cliente: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-                ex.printStackTrace();
-            }
-        });
 
         // Adiciona os painéis à janela
         sistemaAdm.add(headerPanel, BorderLayout.NORTH);

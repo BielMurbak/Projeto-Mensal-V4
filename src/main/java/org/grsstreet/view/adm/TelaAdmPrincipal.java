@@ -1,7 +1,15 @@
 package org.grsstreet.view.adm;
 
+import org.grsstreet.view.TelaMenuPrincipal;
+import org.grsstreet.view.adm.administrador.CadastrarAdm;
+import org.grsstreet.view.adm.administrador.ListarAdms;
+import org.grsstreet.view.adm.administrador.RemoverAdm;
 import org.grsstreet.view.adm.cliente.CadastrarCliente;
 import org.grsstreet.view.adm.cliente.ListarClientes;
+import org.grsstreet.view.adm.cliente.RemoverCliente;
+import org.grsstreet.view.adm.produto.CadastrarProduto;
+import org.grsstreet.view.adm.produto.ListarProdutos;
+import org.grsstreet.view.adm.produto.RemoverProduto;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,26 +47,76 @@ public class TelaAdmPrincipal extends JFrame{
 
         };
 
-        for(String texto : botoes ){
+        for(String texto : botoes ) {
             JButton btn = new JButton(texto);
             btn.setAlignmentX(Component.CENTER_ALIGNMENT);
-            btn.setMaximumSize(new Dimension(300,60));
-            btn.setPreferredSize(new Dimension (300,60));
+            btn.setMaximumSize(new Dimension(300, 60));
+            btn.setPreferredSize(new Dimension(300, 60));
             btn.setFont(new Font("Arial", Font.BOLD, 20));
-            btn.setBackground( Color.GRAY);
+            btn.setBackground(Color.GRAY);
             btn.setFocusPainted(false);
             btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            panelAdm.add(Box.createRigidArea(new Dimension(0,60)));
+            panelAdm.add(Box.createRigidArea(new Dimension(0, 60)));
             panelAdm.add(btn);
 
             if (texto.equals("1-Cadastrar cliente")) {
                 btn.addActionListener(e -> {
                     new CadastrarCliente();
+                    dispose();
                 });
-            }else if(texto.equalsIgnoreCase("2-Listar clientes"));
+            } else if (texto.equalsIgnoreCase("2-Listar clientes"))
             btn.addActionListener(e -> {
                 new ListarClientes();
+                dispose();
             });
+            else if(texto.equalsIgnoreCase("3-Remover cliente"))
+            btn.addActionListener(e -> {
+                new RemoverCliente();
+                dispose();
+            });
+
+            else if(texto.equalsIgnoreCase("7-Adicionar administrado"))
+                btn.addActionListener(e -> {
+                    new CadastrarAdm();
+                    dispose();
+                });
+            else if(texto.equalsIgnoreCase("8-Listar administrador"))
+                btn.addActionListener(e -> {
+                    new ListarAdms();
+                    dispose();
+                });
+            else if(texto.equalsIgnoreCase("9-Remover administrador"))
+                btn.addActionListener(e -> {
+                    new RemoverAdm();
+                    dispose();
+                });
+            else if(texto.equalsIgnoreCase("4- Cadastrar Produto"))
+                btn.addActionListener(e -> {
+                    new CadastrarProduto();
+                    dispose();
+                });
+            else if(texto.equalsIgnoreCase("5-Listar produto"))
+                btn.addActionListener(e -> {
+                    new ListarProdutos();
+                    dispose();
+                });
+            else if(texto.equalsIgnoreCase("6-Remover produto"))
+                btn.addActionListener(e -> {
+                    new RemoverProduto();
+                    dispose();
+
+                });
+            else if(texto.equalsIgnoreCase("10-Acessar Sistema User"))
+                btn.addActionListener(e -> {
+                    new TelaMenuPrincipal();
+                    dispose();
+                });
+            else if(texto.equalsIgnoreCase("Encerrar programa"))
+                btn.addActionListener(e -> {
+                    dispose();
+                });
+
+
         }
 
         JPanel footerPanel = new JPanel();

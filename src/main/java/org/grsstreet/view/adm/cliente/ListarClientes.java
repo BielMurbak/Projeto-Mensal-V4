@@ -7,6 +7,7 @@ import org.grsstreet.repository.ClienteRepository;
 import org.grsstreet.repository.EnderecoRepository;
 import org.grsstreet.repository.PessoaRepository;
 import org.grsstreet.service.ClienteLista;
+import org.grsstreet.view.adm.TelaAdmPrincipal;
 
 import javax.swing.*;
 import java.awt.*;
@@ -68,8 +69,28 @@ public class ListarClientes {
         JPanel footerPanel = new JPanel();
         footerPanel.setBackground(Color.DARK_GRAY);
         footerPanel.setPreferredSize(new Dimension(700, 60));
-        panelAdm.add(Box.createRigidArea(new Dimension(0, 40)));
+        panelAdm.add(Box.createRigidArea(new Dimension(0, 50)));
+
         panelAdm.add(footerPanel);
+
+
+        JButton btnV = new JButton("Voltar");
+        btnV.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnV.setMaximumSize(new Dimension(300,60));
+        btnV.setPreferredSize(new Dimension (300,60));
+        btnV.setFont(new Font("Arial", Font.BOLD, 20));
+        btnV.setForeground(Color.WHITE);
+        btnV.setFocusPainted(false);
+        btnV.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        panelAdm.add(Box.createRigidArea(new Dimension(0, 100)));
+        panelAdm.add(btnV);
+
+        btnV.addActionListener(e ->{
+            JOptionPane.showMessageDialog(null, "Voltando ao menu adm", "Voltando", JOptionPane.INFORMATION_MESSAGE);
+            new TelaAdmPrincipal();
+            sistemaAdm.dispose();
+        });
+
 
         // Adiciona os painéis à janela
         sistemaAdm.add(headerPanel, BorderLayout.NORTH);

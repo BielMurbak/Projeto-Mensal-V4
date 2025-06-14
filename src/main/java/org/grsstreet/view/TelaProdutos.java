@@ -40,7 +40,7 @@ public class TelaProdutos extends JFrame {
             ));
             painelProduto.setBackground(Color.WHITE);
 
-            // Imagem
+            // ProdutosLista
             JLabel imagemLabel;
             try {
                 ImageIcon icon = new ImageIcon(produto.getImagem());
@@ -48,7 +48,7 @@ public class TelaProdutos extends JFrame {
                 imagemLabel = new JLabel(new ImageIcon(img));
                 imagemLabel.setHorizontalAlignment(SwingConstants.CENTER);
             } catch (Exception e) {
-                imagemLabel = new JLabel("Imagem não encontrada", SwingConstants.CENTER);
+                imagemLabel = new JLabel("ProdutosLista não encontrada", SwingConstants.CENTER);
             }
 
             // Nome, preço e quantidade centralizados

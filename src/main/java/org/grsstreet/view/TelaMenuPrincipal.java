@@ -1,5 +1,8 @@
 package org.grsstreet.view;
 
+import org.grsstreet.model.user.ClienteEntity;
+import org.grsstreet.session.Sessao;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -23,6 +26,14 @@ public class TelaMenuPrincipal extends JFrame {
         titulo.setFont(new Font("Arial", Font.BOLD, 48));
         painelPrincipal.add(titulo);
 
+        ClienteEntity cliente = Sessao.getClienteLogado();
+
+        JLabel saudacao = new JLabel("Bem-vindo, " + cliente.getPessoa().getNome(), JLabel.CENTER);
+        saudacao.setFont(new Font("Arial", Font.PLAIN, 26));
+        saudacao.setAlignmentX(Component.CENTER_ALIGNMENT);
+        painelPrincipal.add(Box.createRigidArea(new Dimension(0, 20)));
+        painelPrincipal.add(saudacao);
+
         painelPrincipal.add(Box.createRigidArea(new Dimension(0, 60))); // Espaço abaixo do título
 
         // Botão Produtos
@@ -33,6 +44,7 @@ public class TelaMenuPrincipal extends JFrame {
 
         botaoProdutos.addActionListener(e -> {
             dispose(); // Fecha esta tela
+
             new TelaProdutos().setVisible(true); // Abre a tela de produtos
         });
 

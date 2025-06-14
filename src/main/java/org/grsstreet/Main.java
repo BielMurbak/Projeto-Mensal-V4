@@ -22,7 +22,6 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-
         try {
             SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
             Session session = sessionFactory.openSession();

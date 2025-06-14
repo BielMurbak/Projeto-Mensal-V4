@@ -41,6 +41,34 @@ public class ClienteRepository {
         }
     }
 
+        public void deletarCpfCliente (String cpf){
+            Session session = sessionFactory.openSession();
+            Transaction transaction = null;
+
+            try {
+                transaction = session.beginTransaction();
+
+                ClienteEntity cliente = session
+                        .createQuery("FROM cliente c WHERE c.pessoa.cpf = :cpf", ClienteEntity.class)
+                        .setParameter("cpf", cpf)
+                        .uniqueResult();
+
+                if (cliente != null) {
+                    session.delete(cliente);
+                    transaction.commit();
+                    System.out.println("Cliente deletado com sucesso.");
+                } else {
+                    System.out.println("Cliente não encontrado.");
+                }
+
+            } catch (Exception e) {
+                if (transaction != null) transaction.rollback();
+                throw new RuntimeException(e);
+            } finally {
+                session.close();
+            }
+        }
+
     public List<ClienteEntity> listarTodosClientes() {
         Session session = sessionFactory.openSession();
         Transaction transaction = null;

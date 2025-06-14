@@ -6,48 +6,64 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
-
-import java.util.List;
 
 public class CarrinhoRepository {
 
-    private static final SessionFactory sessionFactory;
+    private static final SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 
-    static {
-        try {
-            sessionFactory = new Configuration().configure().buildSessionFactory();
-        } catch (Throwable ex) {
-            System.err.println("Initial SessionFactory creation failed." + ex);
-            throw new ExceptionInInitializerError(ex);
-        }
-    }
-
-    public CarrinhoEntity buscarCarrinhoAbertoPorClienteId(Long clienteId) {
+    /**
+     * Busca um carrinho ativo (não finalizado) para o cliente informado.
+     */
+    public CarrinhoEntity buscarCarrinhoAtivoPorCliente(ClienteEntity cliente) {
         try (Session session = sessionFactory.openSession()) {
-            String hql = "FROM CarrinhoEntity c WHERE c.cliente.id = :clienteId AND c.finalizado = false";
-            return session.createQuery(hql, CarrinhoEntity.class)
-                    .setParameter("clienteId", clienteId)
+            return session.createQuery(
+                            "FROM CarrinhoEntity WHERE cliente.id = :clienteId AND finalizado = false",
+                            CarrinhoEntity.class)
+                    .setParameter("clienteId", cliente.getId())
                     .uniqueResult();
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao buscar carrinho ativo para o cliente", e);
         }
     }
 
-    public CarrinhoEntity salvarOuAtualizar(CarrinhoEntity carrinho) {
+    /**
+     * Salva um novo carrinho no banco de dados.
+     */
+    public CarrinhoEntity salvar(CarrinhoEntity carrinho) {
         Transaction tx = null;
         try (Session session = sessionFactory.openSession()) {
             tx = session.beginTransaction();
-            session.saveOrUpdate(carrinho);
+            session.save(carrinho);
             tx.commit();
             return carrinho;
         } catch (Exception e) {
             if (tx != null) tx.rollback();
-            throw e;
+            throw new RuntimeException("Erro ao salvar carrinho", e);
         }
     }
 
-    public List<CarrinhoEntity> listarTodos() {
+    public CarrinhoEntity buscarCarrinhoAtivoPorClienteComItens(ClienteEntity cliente) {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("FROM CarrinhoEntity", CarrinhoEntity.class).list();
+            return session.createQuery(
+                            "SELECT c FROM CarrinhoEntity c LEFT JOIN FETCH c.itens WHERE c.cliente.id = :clienteId AND c.finalizado = false",
+                            CarrinhoEntity.class)
+                    .setParameter("clienteId", cliente.getId())
+                    .uniqueResult();
+        }
+    }
+
+    /**
+     * Atualiza um carrinho existente no banco (por exemplo, para marcar como finalizado).
+     */
+    public void atualizar(CarrinhoEntity carrinho) {
+        Transaction tx = null;
+        try (Session session = sessionFactory.openSession()) {
+            tx = session.beginTransaction();
+            session.update(carrinho);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            throw new RuntimeException("Erro ao atualizar carrinho", e);
         }
     }
 }

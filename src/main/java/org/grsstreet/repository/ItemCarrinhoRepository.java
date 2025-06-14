@@ -27,6 +27,15 @@ public class ItemCarrinhoRepository {
         }
     }
 
+    public List<ItemCarrinhoEntity> buscarItensPorCarrinho(CarrinhoEntity carrinho) {
+        Session session = sessionFactory.openSession();
+        List<ItemCarrinhoEntity> itens = session.createQuery("FROM ItemCarrinhoEntity i WHERE i.carrinho.id = :id", ItemCarrinhoEntity.class)
+                .setParameter("id", carrinho.getId())
+                .getResultList();
+        session.close();
+        return itens;
+    }
+
     public void atualizar(ItemCarrinhoEntity item) {
         Transaction tx = null;
         try (Session session = sessionFactory.openSession()) {

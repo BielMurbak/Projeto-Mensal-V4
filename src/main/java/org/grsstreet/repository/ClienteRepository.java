@@ -7,6 +7,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.util.List;
 
 public class ClienteRepository {
@@ -25,7 +27,7 @@ public class ClienteRepository {
             transaction = session.beginTransaction();
 
             ClienteEntity cliente = session
-                    .createQuery("FROM cliente WHERE senha = :senha", ClienteEntity.class)
+                    .createQuery("FROM ClienteEntity WHERE senha = :senha", ClienteEntity.class)
                     .setParameter("senha", senha)
                     .uniqueResult();
 
@@ -36,6 +38,30 @@ public class ClienteRepository {
         } catch (RuntimeException e) {
             if (transaction != null) transaction.rollback();
             throw new RuntimeException("Erro ao buscar cliente ", e);
+        } finally {
+            session.close();
+        }
+    }
+
+    public ClienteEntity buscarClientePorSenha(String senha) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+
+            ClienteEntity cliente = session
+                    .createQuery("FROM ClienteEntity c WHERE c.senha = :senha", ClienteEntity.class)
+                    .setParameter("senha", senha)
+                    .uniqueResult();
+
+            transaction.commit();
+
+            return cliente;
+
+        } catch (RuntimeException e) {
+            if (transaction != null) transaction.rollback();
+            throw new RuntimeException("Erro ao buscar cliente por senha", e);
         } finally {
             session.close();
         }

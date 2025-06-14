@@ -5,7 +5,8 @@ import org.grsstreet.model.address.EnderecoEntity;
 
 import javax.persistence.*;
 
-@Entity(name = "cliente")
+@Entity
+@Table(name = "cliente")
     public class ClienteEntity {
 
         @Id

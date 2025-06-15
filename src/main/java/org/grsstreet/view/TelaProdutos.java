@@ -206,7 +206,7 @@ public class TelaProdutos extends JFrame {
 
         // Atualiza estoque do produto (considerando a quantidade já no carrinho)
         produto.setQuantidade(produto.getQuantidade() - quantidade);
-        produtoRepo.atualizar(produto);
+        // produtoRepo.atualizar(produto);
 
         JOptionPane.showMessageDialog(this, "Produto adicionado ao carrinho!");
     }

@@ -14,14 +14,19 @@ import java.awt.*;
 import java.util.List; // Import correto para coleções
 
 
-public class ListarClientes {
+public class ListarClientes extends JFrame{
 
     public ListarClientes () {
         JFrame sistemaAdm = new JFrame("Sistema Adm GR's street");
         sistemaAdm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        sistemaAdm.setSize(1080, 720);
+        sistemaAdm.setSize(1080, 750);
         sistemaAdm.setLocationRelativeTo(null);
         sistemaAdm.setLayout(new BorderLayout());
+
+        Color backgroundColor = new Color(30, 30, 30);
+        Color buttonColor = new Color(45, 120, 200);
+        Color TextColor = Color.WHITE;
+        Color headerColor = new Color(20, 20, 20);
 
         // Cabeçalho
         JPanel headerPanel = new JPanel(new BorderLayout());
@@ -29,14 +34,14 @@ public class ListarClientes {
         headerPanel.setPreferredSize(new Dimension(700, 40));
 
         JLabel titleLabel = new JLabel("Listar Clientes", SwingConstants.CENTER);
-        titleLabel.setForeground(Color.WHITE);
+        titleLabel.setForeground(TextColor);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
         headerPanel.add(titleLabel, BorderLayout.CENTER);
 
         // Painel principal
         JPanel panelAdm = new JPanel();
         panelAdm.setLayout(new BoxLayout(panelAdm, BoxLayout.Y_AXIS));
-        panelAdm.setBackground(Color.DARK_GRAY);  // cor igual à da imagem
+        panelAdm.setBackground(backgroundColor);  // cor igual à da imagem
         panelAdm.add(Box.createRigidArea(new Dimension(0, 10)));
 
         // Painel com os dados da tabela
@@ -67,7 +72,7 @@ public class ListarClientes {
 
         // Rodapé
         JPanel footerPanel = new JPanel();
-        footerPanel.setBackground(Color.DARK_GRAY);
+        footerPanel.setBackground(backgroundColor);
         footerPanel.setPreferredSize(new Dimension(700, 60));
         panelAdm.add(Box.createRigidArea(new Dimension(0, 50)));
 
@@ -79,8 +84,9 @@ public class ListarClientes {
         btnV.setMaximumSize(new Dimension(300,60));
         btnV.setPreferredSize(new Dimension (300,60));
         btnV.setFont(new Font("Arial", Font.BOLD, 20));
-        btnV.setForeground(Color.WHITE);
+        btnV.setForeground(TextColor);
         btnV.setFocusPainted(false);
+        btnV.setBackground(buttonColor);
         btnV.setCursor(new Cursor(Cursor.HAND_CURSOR));
         panelAdm.add(Box.createRigidArea(new Dimension(0, 100)));
         panelAdm.add(btnV);
@@ -90,6 +96,8 @@ public class ListarClientes {
             new TelaAdmPrincipal();
             sistemaAdm.dispose();
         });
+
+        panelAdm.add(Box.createRigidArea(new Dimension(0, 50))); // espaço abaixo do botão
 
 
         // Adiciona os painéis à janela

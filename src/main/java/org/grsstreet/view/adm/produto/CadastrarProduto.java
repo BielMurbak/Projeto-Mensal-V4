@@ -20,9 +20,17 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 
-public class CadastrarProduto {
+public class CadastrarProduto extends JFrame{
     private String caminhoImagemSelecionada;
+
     public CadastrarProduto() {
+
+        Color backgroundColor = new Color(30, 30, 30);
+        Color buttonColor = new Color(45, 120, 200);
+        Color TextColor = Color.WHITE;
+        Color headerColor = new Color(20, 20, 20);
+
+
         JFrame sistemaAdm = new JFrame("Sistema Adm GR's street");
         sistemaAdm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         sistemaAdm.setSize(1080, 720);
@@ -39,50 +47,58 @@ public class CadastrarProduto {
         headerPanel.add(titleLabel, BorderLayout.CENTER);
         JPanel panelAdm = new JPanel();
         panelAdm.setLayout(new BoxLayout((panelAdm), BoxLayout.Y_AXIS));
-        panelAdm.setBackground(Color.lightGray);
+        panelAdm.setBackground(backgroundColor);
         panelAdm.add(Box.createRigidArea(new Dimension(0, 10)));
 
 
         JLabel labelNome = new JLabel("Nome");
         labelNome.setFont(new Font("Arial", Font.PLAIN, 22));
+        labelNome.setForeground(Color.WHITE);
         JTextField campoNome = new JTextField();
         campoNome.setPreferredSize(new Dimension(300, 60));
         campoNome.setMaximumSize(new Dimension(300, 60));
         campoNome.setFont(new Font("Arial", Font.PLAIN, 20));
         labelNome.setAlignmentX(Component.CENTER_ALIGNMENT);
         campoNome.setAlignmentX(Component.CENTER_ALIGNMENT);
+        campoNome.setBackground(Color.darkGray);
         panelAdm.add(Box.createRigidArea(new Dimension(0, 40)));
         panelAdm.add(labelNome);
         panelAdm.add(campoNome);
 
         JLabel labelTipo = new JLabel("Tipo");
-        labelNome.setFont(new Font("Arial", Font.PLAIN, 22));
+        labelTipo.setForeground(Color.WHITE);
+        labelTipo.setFont(new Font("Arial", Font.PLAIN, 22));
         JTextField campoTipo = new JTextField();
         campoTipo.setPreferredSize(new Dimension(300, 60));
         campoTipo.setMaximumSize(new Dimension(300, 60));
         campoTipo.setFont(new Font("Arial", Font.PLAIN, 20));
         labelTipo.setAlignmentX(Component.CENTER_ALIGNMENT);
         campoTipo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        campoTipo.setBackground(Color.darkGray);
         panelAdm.add(Box.createRigidArea(new Dimension(0, 40)));
         panelAdm.add(labelTipo);
         panelAdm.add(campoTipo);
 
         JLabel labelQuantidade = new JLabel("Quantidade");
-        labelNome.setFont(new Font("Arial", Font.PLAIN, 22));
+        labelQuantidade.setForeground(Color.WHITE);
+        labelQuantidade.setFont(new Font("Arial", Font.PLAIN, 22));
         JTextField campoQuantidade = new JTextField();
         campoQuantidade .setPreferredSize(new Dimension(300, 60));
         campoQuantidade.setMaximumSize(new Dimension(300, 60));
         campoQuantidade.setFont(new Font("Arial", Font.PLAIN, 20));
         labelQuantidade.setAlignmentX(Component.CENTER_ALIGNMENT);
         campoQuantidade.setAlignmentX(Component.CENTER_ALIGNMENT);
+        campoQuantidade.setBackground(Color.darkGray);
         panelAdm.add(Box.createRigidArea(new Dimension(0, 40)));
         panelAdm.add(labelQuantidade);
         panelAdm.add(campoQuantidade);
 
         JLabel labelPreco= new JLabel("Preço");
-        labelNome.setFont(new Font("Arial", Font.PLAIN, 22));
+        labelPreco.setFont(new Font("Arial", Font.PLAIN, 22));
+        labelPreco.setForeground(Color.WHITE);
         JTextField campoPreco = new JTextField();
         campoPreco .setPreferredSize(new Dimension(300, 60));
+        campoPreco.setBackground(Color.darkGray);
         campoPreco.setMaximumSize(new Dimension(300, 60));
         campoPreco.setFont(new Font("Arial", Font.PLAIN, 20));
         labelPreco.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -98,10 +114,12 @@ public class CadastrarProduto {
         panelAdm.add(previewImagem);
         panelAdm.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        JButton btnSelecionarImagem = new JButton("Selecionar ProdutosLista");
+        JButton btnSelecionarImagem = new JButton("Selecionar imagem ");
+        btnSelecionarImagem.setForeground(Color.white);
+        btnSelecionarImagem.setBackground(buttonColor);
         btnSelecionarImagem.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelAdm.add(btnSelecionarImagem);
-        panelAdm.add(Box.createRigidArea(new Dimension(0, 20)));
+        panelAdm.add(Box.createRigidArea(new Dimension(0, 40)));
 
         btnSelecionarImagem.addActionListener(e -> {
             JFileChooser chooser = new JFileChooser();
@@ -118,7 +136,8 @@ public class CadastrarProduto {
         btn.setMaximumSize(new Dimension(300,60));
         btn.setPreferredSize(new Dimension (300,60));
         btn.setFont(new Font("Arial", Font.BOLD, 20));
-        btn.setBackground( Color.GRAY);
+        btn.setBackground(buttonColor);
+        btn.setForeground(Color.white);
         btn.setFocusPainted(false);
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         panelAdm.add(Box.createRigidArea(new Dimension(0,60)));
@@ -129,11 +148,11 @@ public class CadastrarProduto {
         btnV.setMaximumSize(new Dimension(300,60));
         btnV.setPreferredSize(new Dimension (300,60));
         btnV.setFont(new Font("Arial", Font.BOLD, 20));
-        btnV.setBackground(Color.GRAY);
+        btnV.setBackground(buttonColor);
         btnV.setForeground(Color.WHITE);
         btnV.setFocusPainted(false);
         btnV.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        panelAdm.add(Box.createRigidArea(new Dimension(0, 10)));
+        panelAdm.add(Box.createRigidArea(new Dimension(0, 30)));
         panelAdm.add(btnV);
 
         btnV.addActionListener(event ->{

@@ -17,7 +17,7 @@ public class ClienteRepository {
         sessionFactory = new Configuration().configure().buildSessionFactory();
     }
 
-    public boolean buscarPorSenhaCliente(String senha) {
+    public ClienteEntity buscarClientePorSenha(String senha) {
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
 
@@ -25,13 +25,12 @@ public class ClienteRepository {
             transaction = session.beginTransaction();
 
             ClienteEntity cliente = session
-                    .createQuery("FROM cliente WHERE senha = :senha", ClienteEntity.class)
+                    .createQuery("FROM ClienteEntity WHERE senha = :senha", ClienteEntity.class)
                     .setParameter("senha", senha)
                     .uniqueResult();
 
             transaction.commit();
-
-            return cliente != null;
+            return cliente;
 
         } catch (RuntimeException e) {
             if (transaction != null) transaction.rollback();
@@ -41,7 +40,8 @@ public class ClienteRepository {
         }
     }
 
-        public void deletarCpfCliente (String cpf){
+
+    public void deletarCpfCliente (String cpf){
             Session session = sessionFactory.openSession();
             Transaction transaction = null;
 
@@ -77,7 +77,7 @@ public class ClienteRepository {
             transaction = session.beginTransaction();
 
             List<ClienteEntity> clientes = session
-                    .createQuery("FROM cliente a JOIN FETCH a.pessoa JOIN FETCH a.enderecoEntity", ClienteEntity.class)
+                    .createQuery("FROM ClienteEntity a JOIN FETCH a.pessoa JOIN FETCH a.enderecoEntity", ClienteEntity.class)
                     .getResultList();
 
             transaction.commit();

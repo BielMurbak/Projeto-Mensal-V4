@@ -6,9 +6,15 @@ import org.grsstreet.view.adm.TelaAdmPrincipal;
 import javax.swing.*;
 import java.awt.*;
 
-public class RemoverCliente {
+public class RemoverCliente extends JFrame{
 
     public RemoverCliente () {
+
+        Color backgroundColor = new Color(30, 30, 30);
+        Color buttonColor = new Color(45, 120, 200);
+        Color TextColor = Color.WHITE;
+        Color headerColor = new Color(20, 20, 20);
+
         JFrame sistemaAdm = new JFrame("Sistema Adm GR's street");
         sistemaAdm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         sistemaAdm.setSize(1080, 720);
@@ -21,19 +27,20 @@ public class RemoverCliente {
         headerPanel.setPreferredSize(new Dimension(700, 40));
 
         JLabel titleLabel = new JLabel("Remover Cliente", SwingConstants.CENTER);
-        titleLabel.setForeground(Color.WHITE);
+        titleLabel.setForeground(TextColor);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
         headerPanel.add(titleLabel, BorderLayout.CENTER);
 
         // Painel principal branco
         JPanel panelAdm = new JPanel();
         panelAdm.setLayout(new BoxLayout(panelAdm, BoxLayout.Y_AXIS));
-        panelAdm.setBackground(Color.WHITE);
+        panelAdm.setBackground(backgroundColor);
         panelAdm.add(Box.createRigidArea(new Dimension(0, 40)));
 
         // Label e campo CPF
         JLabel labelCPF = new JLabel("CPF");
         labelCPF.setFont(new Font("Arial", Font.PLAIN, 22));
+        labelCPF.setForeground(TextColor);
         labelCPF.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelAdm.add(labelCPF);
 
@@ -42,7 +49,7 @@ public class RemoverCliente {
         campoCPF.setMaximumSize(new Dimension(300, 60));
         campoCPF.setFont(new Font("Arial", Font.PLAIN, 20));
         campoCPF.setAlignmentX(Component.CENTER_ALIGNMENT);
-        campoCPF.setBackground(Color.WHITE);
+        campoCPF.setBackground(TextColor);
         panelAdm.add(Box.createRigidArea(new Dimension(0, 10)));
         panelAdm.add(campoCPF);
 
@@ -52,8 +59,8 @@ public class RemoverCliente {
         btn.setMaximumSize(new Dimension(300,60));
         btn.setPreferredSize(new Dimension (300,60));
         btn.setFont(new Font("Arial", Font.BOLD, 20));
-        btn.setBackground(Color.GRAY);
-        btn.setForeground(Color.WHITE);
+        btn.setBackground(buttonColor);
+        btn.setForeground(TextColor);
         btn.setFocusPainted(false);
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         panelAdm.add(Box.createRigidArea(new Dimension(0, 40)));
@@ -64,8 +71,8 @@ public class RemoverCliente {
         btnV.setMaximumSize(new Dimension(300,60));
         btnV.setPreferredSize(new Dimension (300,60));
         btnV.setFont(new Font("Arial", Font.BOLD, 20));
-        btnV.setBackground(Color.GRAY);
-        btnV.setForeground(Color.WHITE);
+        btnV.setBackground(buttonColor);
+        btnV.setForeground(TextColor);
         btnV.setFocusPainted(false);
         btnV.setCursor(new Cursor(Cursor.HAND_CURSOR));
         panelAdm.add(Box.createRigidArea(new Dimension(0, 40)));

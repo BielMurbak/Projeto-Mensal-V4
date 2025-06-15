@@ -17,7 +17,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class ListarAdms {
+public class ListarAdms extends JFrame{
 
         public ListarAdms() {
             JFrame sistemaAdm = new JFrame("Sistema Adm GR's street");
@@ -26,9 +26,14 @@ public class ListarAdms {
             sistemaAdm.setLocationRelativeTo(null);
             sistemaAdm.setLayout(new BorderLayout());
 
+            Color backgroundColor = new Color(30, 30, 30);
+            Color buttonColor = new Color(45, 120, 200);
+            Color TextColor = Color.WHITE;
+            Color headerColor = new Color(20, 20, 20);
+
             // Cabeçalho
             JPanel headerPanel = new JPanel(new BorderLayout());
-            headerPanel.setBackground(Color.DARK_GRAY);
+            headerPanel.setBackground(Color.darkGray);
             headerPanel.setPreferredSize(new Dimension(700, 40));
 
             JLabel titleLabel = new JLabel("Listar Adms", SwingConstants.CENTER);
@@ -39,13 +44,13 @@ public class ListarAdms {
             // Painel principal
             JPanel panelAdm = new JPanel();
             panelAdm.setLayout(new BoxLayout(panelAdm, BoxLayout.Y_AXIS));
-            panelAdm.setBackground(Color.DARK_GRAY);  // cor igual à da imagem
+            panelAdm.setBackground(backgroundColor);  // cor igual à da imagem
             panelAdm.add(Box.createRigidArea(new Dimension(0, 10)));
 
             // Painel com os dados da tabela
             JPanel dadosAdm = new JPanel();
             dadosAdm.setLayout(new BoxLayout(dadosAdm, BoxLayout.Y_AXIS)); // CORRIGIDO
-            dadosAdm.setBackground(Color.LIGHT_GRAY);
+            dadosAdm.setBackground(backgroundColor);
             dadosAdm.setMaximumSize(new Dimension(1000, 400)); // ajuda a garantir visibilidade
             dadosAdm.setAlignmentX(Component.CENTER_ALIGNMENT); // centraliza horizontalmente
 
@@ -69,7 +74,7 @@ public class ListarAdms {
 
             // Rodapé
             JPanel footerPanel = new JPanel();
-            footerPanel.setBackground(Color.DARK_GRAY);
+            footerPanel.setBackground(backgroundColor);
             footerPanel.setPreferredSize(new Dimension(700, 60));
             panelAdm.add(Box.createRigidArea(new Dimension(0, 50)));
 
@@ -81,7 +86,7 @@ public class ListarAdms {
             btnV.setMaximumSize(new Dimension(300,60));
             btnV.setPreferredSize(new Dimension (300,60));
             btnV.setFont(new Font("Arial", Font.BOLD, 20));
-            btnV.setBackground(Color.GRAY);
+            btnV.setBackground(buttonColor);
             btnV.setForeground(Color.WHITE);
             btnV.setFocusPainted(false);
             btnV.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -94,6 +99,7 @@ public class ListarAdms {
                 sistemaAdm.dispose();
             });
 
+            panelAdm.add(Box.createRigidArea(new Dimension(0, 50))); // espaço abaixo do botão
 
             // Adiciona os painéis à janela
             sistemaAdm.add(headerPanel, BorderLayout.NORTH);

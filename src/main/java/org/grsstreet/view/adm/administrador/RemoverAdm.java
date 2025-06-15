@@ -7,13 +7,17 @@ import org.grsstreet.view.adm.cliente.RemoverCliente;
 
 import javax.swing.*;
 import java.awt.*;
-
-
-
-
-    public class RemoverAdm {
+    public class RemoverAdm extends JFrame{
 
         public RemoverAdm() {
+
+            Color backgroundColor = new Color(30, 30, 30);
+            Color buttonColor = new Color(45, 120, 200);
+            Color TextColor = Color.WHITE;
+            Color headerColor = new Color(20, 20, 20);
+
+
+
             JFrame sistemaAdm = new JFrame("Sistema Adm GR's street");
             sistemaAdm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             sistemaAdm.setSize(1080, 720);
@@ -33,12 +37,13 @@ import java.awt.*;
             // Painel principal branco
             JPanel panelAdm = new JPanel();
             panelAdm.setLayout(new BoxLayout(panelAdm, BoxLayout.Y_AXIS));
-            panelAdm.setBackground(Color.WHITE);
+            panelAdm.setBackground(backgroundColor);
             panelAdm.add(Box.createRigidArea(new Dimension(0, 40)));
 
             // Label e campo CPF
             JLabel labelCPF = new JLabel("CPF");
             labelCPF.setFont(new Font("Arial", Font.PLAIN, 22));
+            labelCPF.setForeground(Color.white);
             labelCPF.setAlignmentX(Component.CENTER_ALIGNMENT);
             panelAdm.add(labelCPF);
 
@@ -57,7 +62,7 @@ import java.awt.*;
             btn.setMaximumSize(new Dimension(300,60));
             btn.setPreferredSize(new Dimension (300,60));
             btn.setFont(new Font("Arial", Font.BOLD, 20));
-            btn.setBackground(Color.GRAY);
+            btn.setBackground(buttonColor);
             btn.setForeground(Color.WHITE);
             btn.setFocusPainted(false);
             btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -69,7 +74,7 @@ import java.awt.*;
             btnV.setMaximumSize(new Dimension(300,60));
             btnV.setPreferredSize(new Dimension (300,60));
             btnV.setFont(new Font("Arial", Font.BOLD, 20));
-            btnV.setBackground(Color.GRAY);
+            btnV.setBackground(buttonColor);
             btnV.setForeground(Color.WHITE);
             btnV.setFocusPainted(false);
             btnV.setCursor(new Cursor(Cursor.HAND_CURSOR));

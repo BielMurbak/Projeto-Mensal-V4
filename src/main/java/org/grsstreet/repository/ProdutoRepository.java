@@ -4,6 +4,7 @@ import org.grsstreet.model.enums.TipoProduto;
 import org.grsstreet.model.product.ProdutoEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import java.util.List;
@@ -34,6 +35,34 @@ public class ProdutoRepository {
             session.beginTransaction();
             session.save(produto);
             session.getTransaction().commit();
+        }
+    }
+
+    public void deletarNomeProduto(String nome) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+
+            ProdutoEntity produto = session
+                    .createQuery("FROM produto WHERE nome = :nome", ProdutoEntity.class)
+                    .setParameter("nome", nome)
+                    .uniqueResult();
+
+            if (produto != null) {
+                session.delete(produto);
+                transaction.commit();
+                System.out.println("Produto deletado com sucesso.");
+            } else {
+                System.out.println("Produto não encontrado.");
+            }
+
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            throw new RuntimeException(e);
+        } finally {
+            session.close();
         }
     }
 }

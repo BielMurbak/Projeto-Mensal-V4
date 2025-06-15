@@ -17,6 +17,12 @@ import java.awt.*;
 public class TelaAdmPrincipal extends JFrame{
 
     public TelaAdmPrincipal(){
+        Color backgroundColor = new Color(30, 30, 30);      // fundo geral escuro
+        Color buttonColor = new Color(45, 120, 200);        // botões em azul
+        Color TextColor = Color.WHITE;               // texto branco nos botões
+        Color headerColor = new Color(20, 20, 20);
+
+
         JFrame sistemaAdm = new JFrame ("Sistema Adm GR's street");
         sistemaAdm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         sistemaAdm.setSize(1080,720);
@@ -24,19 +30,20 @@ public class TelaAdmPrincipal extends JFrame{
         sistemaAdm.setLayout(new BorderLayout());
 
 
+
         JPanel headerPanel = new JPanel(new BorderLayout());
-        headerPanel.setBackground(Color.DARK_GRAY);
+        headerPanel.setBackground(headerColor);
         headerPanel.setPreferredSize(new Dimension(700, 60));
 
-        JLabel titleLabel = new JLabel("Sistema Adm GR's", SwingConstants.CENTER);
-        titleLabel.setForeground(Color.WHITE);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        JLabel titleLabel = new JLabel("Sistema Adm GR's", new ImageIcon(""),SwingConstants.CENTER);
+        titleLabel.setForeground(TextColor);
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 28));
         headerPanel.add(titleLabel, BorderLayout.CENTER);
 
 
         JPanel panelAdm = new JPanel();
         panelAdm.setLayout(new BoxLayout((panelAdm),BoxLayout.Y_AXIS));
-        panelAdm.setBackground(Color.lightGray);
+        panelAdm.setBackground(backgroundColor);
         panelAdm.add(Box.createRigidArea(new Dimension(0, 10)));
 
 
@@ -52,11 +59,23 @@ public class TelaAdmPrincipal extends JFrame{
             btn.setAlignmentX(Component.CENTER_ALIGNMENT);
             btn.setMaximumSize(new Dimension(300, 60));
             btn.setPreferredSize(new Dimension(300, 60));
-            btn.setFont(new Font("Arial", Font.BOLD, 20));
-            btn.setBackground(Color.GRAY);
+            btn.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+            btn.setBackground(buttonColor);
+            btn.setForeground(TextColor);
             btn.setFocusPainted(false);
+            btn.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
             btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
             panelAdm.add(Box.createRigidArea(new Dimension(0, 60)));
+
+
+            btn.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    btn.setBackground(buttonColor.brighter());
+                }
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    btn.setBackground(buttonColor);
+                }
+            });
             panelAdm.add(btn);
 
             if (texto.equals("1-Cadastrar cliente")) {
@@ -90,7 +109,7 @@ public class TelaAdmPrincipal extends JFrame{
                     new RemoverAdm();
                     dispose();
                 });
-            else if(texto.equalsIgnoreCase("4- Cadastrar Produto"))
+            else if(texto.equalsIgnoreCase("4-Cadastrar Produto"))
                 btn.addActionListener(e -> {
                     new CadastrarProduto();
                     dispose();
@@ -111,7 +130,7 @@ public class TelaAdmPrincipal extends JFrame{
                     new TelaMenuPrincipal();
                     dispose();
                 });
-            else if(texto.equalsIgnoreCase("Encerrar programa"))
+            else if(texto.equalsIgnoreCase("11-Encerrar programa"))
                 btn.addActionListener(e -> {
                     dispose();
                 });
@@ -120,7 +139,7 @@ public class TelaAdmPrincipal extends JFrame{
         }
 
         JPanel footerPanel = new JPanel();
-        footerPanel.setBackground(Color.DARK_GRAY);
+        footerPanel.setBackground(backgroundColor);
         footerPanel.setPreferredSize(new Dimension(700,60));
         panelAdm.add(Box.createRigidArea(new Dimension(0,40)));
 
@@ -162,6 +181,9 @@ public class TelaAdmPrincipal extends JFrame{
 
 
 
+    }
+    public static void main(String[] args) {
+        new TelaAdmPrincipal();
     }
 }
 

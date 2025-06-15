@@ -22,12 +22,18 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-public class CadastrarCliente {
+public class CadastrarCliente extends JFrame {
 
     public CadastrarCliente() {
+
+        Color backgroundColor = new Color(30, 30, 30);
+        Color buttonColor = new Color(45, 120, 200);
+        Color TextColor = Color.WHITE;
+        Color headerColor = new Color(20, 20, 20);
+
         JFrame sistemaAdm = new JFrame("Sistema Adm GR's street");
         sistemaAdm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        sistemaAdm.setSize(1080, 720);
+        sistemaAdm.setSize(1080, 730);
         sistemaAdm.setLocationRelativeTo(null);
         sistemaAdm.setLayout(new BorderLayout());
 
@@ -36,24 +42,29 @@ public class CadastrarCliente {
         headerPanel.setPreferredSize(new Dimension(700, 40));
 
         JLabel titleLabel = new JLabel("Cadastrar Cliente", SwingConstants.CENTER);
-        titleLabel.setForeground(Color.WHITE);
+        titleLabel.setForeground(TextColor);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
         headerPanel.add(titleLabel, BorderLayout.CENTER);
         JPanel panelAdm = new JPanel();
         panelAdm.setLayout(new BoxLayout((panelAdm),BoxLayout.Y_AXIS));
-        panelAdm.setBackground(Color.lightGray);
+        panelAdm.setBackground(backgroundColor);
         panelAdm.add(Box.createRigidArea(new Dimension(0, 10)));
-
 
         JLabel labelNome = new JLabel("Nome");
         labelNome.setFont(new Font("Arial", Font.PLAIN, 22));
-        JTextField campoNome = new JTextField();
-        campoNome.setPreferredSize(new Dimension(300, 60));
-        campoNome.setMaximumSize(new Dimension(300, 60));
-        campoNome.setFont(new Font("Arial", Font.PLAIN, 20));
+        labelNome.setForeground(TextColor);
         labelNome.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JTextField campoNome = new JTextField();
+        campoNome.setPreferredSize(new Dimension(300, 30));
+        campoNome.setMaximumSize(new Dimension(300, 30));
+        campoNome.setFont(new Font("Arial", Font.PLAIN, 30));
+        campoNome.setBackground(Color.DARK_GRAY);
+        campoNome.setForeground(TextColor);
+        campoNome.setCaretColor(TextColor);
         campoNome.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panelAdm.add(Box.createRigidArea(new Dimension(0,40)));
+
+        panelAdm.add(Box.createRigidArea(new Dimension(0, 30)));
         panelAdm.add(labelNome);
         panelAdm.add(campoNome);
 
@@ -61,78 +72,105 @@ public class CadastrarCliente {
 
         JLabel labelNascimento = new JLabel("Data de Nascimento yyyy/mm/dd");
         labelNascimento.setFont(new Font("Arial", Font.PLAIN, 22));
-        JTextField campoNascimento = new JTextField();
-        campoNascimento.setPreferredSize(new Dimension(300, 60));
-        campoNascimento.setMaximumSize(new Dimension(300, 60));
-        campoNascimento.setFont(new Font("Arial", Font.PLAIN, 20));
+        labelNascimento.setForeground(TextColor);
         labelNascimento.setAlignmentX(Component.CENTER_ALIGNMENT);
-        campoNascimento.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panelAdm.add(Box.createRigidArea(new Dimension(0,40)));
 
+        JTextField campoNascimento = new JTextField();
+        campoNascimento.setPreferredSize(new Dimension(300, 30));
+        campoNascimento.setMaximumSize(new Dimension(300, 30));
+        campoNascimento.setFont(new Font("Arial", Font.PLAIN, 30));
+        campoNascimento.setBackground(Color.DARK_GRAY);
+        campoNascimento.setForeground(TextColor);
+        campoNascimento.setCaretColor(TextColor);
+        campoNascimento.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        panelAdm.add(Box.createRigidArea(new Dimension(0, 30)));
         panelAdm.add(labelNascimento);
         panelAdm.add(campoNascimento);
 
 
         JLabel labelCpf = new JLabel("CPF");
-        labelCpf.setFont(new Font("Arial", Font.PLAIN, 22));
-        JTextField campoCpf = new JTextField();
-        campoCpf.setPreferredSize(new Dimension(300, 60));
-        campoCpf.setMaximumSize(new Dimension(300, 60));
-        campoCpf.setFont(new Font("Arial", Font.PLAIN, 20));
+        labelCpf.setFont(new Font("Arial", Font.BOLD, 22)); // Negrito para destaque
+        labelCpf.setForeground(TextColor);
         labelCpf.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JTextField campoCpf = new JTextField();
+        campoCpf.setPreferredSize(new Dimension(300, 30));
+        campoCpf.setMaximumSize(new Dimension(300, 30));
+        campoCpf.setFont(new Font("Arial", Font.PLAIN, 30));
+        campoCpf.setBackground(Color.DARK_GRAY);
+        campoCpf.setForeground(TextColor);
+        campoCpf.setCaretColor(TextColor);
         campoCpf.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panelAdm.add(Box.createRigidArea(new Dimension(0,40)));
+
+        panelAdm.add(Box.createRigidArea(new Dimension(0, 30)));
         panelAdm.add(labelCpf);
         panelAdm.add(campoCpf);
 
 
+
         JLabel labelCep = new JLabel("CEP");
-        labelCep.setFont(new Font("Arial", Font.PLAIN, 22));
-        JTextField campoCep = new JTextField();
-        campoCep.setPreferredSize(new Dimension(300, 60));
-        campoCep.setMaximumSize(new Dimension(300, 60));
-        campoCep.setFont(new Font("Arial", Font.PLAIN, 20));
+        labelCep.setFont(new Font("Arial", Font.BOLD, 22));
+        labelCep.setForeground(TextColor);
         labelCep.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JTextField campoCep = new JTextField();
+        campoCep.setPreferredSize(new Dimension(300, 30));
+        campoCep.setMaximumSize(new Dimension(300, 30));
+        campoCep.setFont(new Font("Arial", Font.PLAIN, 30));
+        campoCep.setBackground(Color.DARK_GRAY);
+        campoCep.setForeground(TextColor);
+        campoCep.setCaretColor(TextColor);
         campoCep.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panelAdm.add(Box.createRigidArea(new Dimension(0,40)));
+
+        panelAdm.add(Box.createRigidArea(new Dimension(0, 30)));
         panelAdm.add(labelCep);
         panelAdm.add(campoCep);
 
 
+
         JLabel labelSenha = new JLabel("Senha");
-        labelSenha.setFont(new Font("Arial", Font.PLAIN, 22));
-        JTextField campoSenha = new   JTextField();
-        campoSenha.setPreferredSize(new Dimension(300, 60));
-        campoSenha.setMaximumSize(new Dimension(300, 60));
-        campoSenha.setFont(new Font("Arial", Font.PLAIN, 20));
+        labelSenha.setFont(new Font("Arial", Font.BOLD, 22));
+        labelSenha.setForeground(TextColor);
         labelSenha.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JPasswordField campoSenha = new JPasswordField();
+        campoSenha.setPreferredSize(new Dimension(300, 30));
+        campoSenha.setMaximumSize(new Dimension(300, 30));
+        campoSenha.setFont(new Font("Arial", Font.PLAIN, 30));
         campoSenha.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panelAdm.add(Box.createRigidArea(new Dimension(0,60)));
+        campoSenha.setBackground(Color.DARK_GRAY); //
+        campoSenha.setForeground(TextColor);
+        campoSenha.setCaretColor(TextColor);
+
+        panelAdm.add(Box.createRigidArea(new Dimension(0, 30)));
         panelAdm.add(labelSenha);
         panelAdm.add(campoSenha);
 
 
+
         JButton btn = new JButton("Criar");
         btn.setAlignmentX(Component.CENTER_ALIGNMENT);
-        btn.setMaximumSize(new Dimension(300,60));
-        btn.setPreferredSize(new Dimension (300,60));
+        btn.setMaximumSize(new Dimension(300,20));
+        btn.setPreferredSize(new Dimension (300,20));
         btn.setFont(new Font("Arial", Font.BOLD, 20));
-        btn.setBackground( Color.GRAY);
+        btn.setBackground(buttonColor);
         btn.setFocusPainted(false);
+        btn.setForeground(TextColor);
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        panelAdm.add(Box.createRigidArea(new Dimension(0,60)));
+        panelAdm.add(Box.createRigidArea(new Dimension(0,40)));
         panelAdm.add(btn);
 
         JButton btnV = new JButton("Voltar");
         btnV.setAlignmentX(Component.CENTER_ALIGNMENT);
-        btnV.setMaximumSize(new Dimension(300,60));
-        btnV.setPreferredSize(new Dimension (300,60));
+        btnV.setMaximumSize(new Dimension(300,20));
+        btnV.setPreferredSize(new Dimension (300,20));
         btnV.setFont(new Font("Arial", Font.BOLD, 20));
-        btnV.setBackground(Color.GRAY);
-        btnV.setForeground(Color.WHITE);
+        btnV.setBackground(buttonColor);
+        btnV.setForeground(TextColor);
         btnV.setFocusPainted(false);
         btnV.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        panelAdm.add(Box.createRigidArea(new Dimension(0, 10)));
+        panelAdm.add(Box.createRigidArea(new Dimension(0, 40)));
         panelAdm.add(btnV);
 
         btnV.addActionListener(event ->{
@@ -220,6 +258,8 @@ public class CadastrarCliente {
 
 
         });
+
+
 
         JPanel footerPanel = new JPanel();
         footerPanel.setBackground(Color.DARK_GRAY);

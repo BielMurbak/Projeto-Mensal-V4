@@ -92,26 +92,25 @@ public class TelaLogin extends JFrame {
             AdministradorRepository administradorRepository = new AdministradorRepository();
             ClienteRepository clienteRepository = new ClienteRepository();
 
-            boolean isAdm = administradorRepository.buscarPorSenha(senha);
-            boolean isContumer = clienteRepository.buscarPorSenhaCliente(senha);
-
-            if (isAdm) {
+            if (administradorRepository.buscarPorSenha(senha)) {
                 JOptionPane.showMessageDialog(this, "Login bem-sucedido!");
                 new TelaAdmPrincipal();
                 dispose();
+                return;
+            }
 
-            } else if (isContumer) {
-                ClienteEntity cliente = clienteRepository.buscarClientePorSenha(senha);
+            ClienteEntity cliente = clienteRepository.buscarClientePorSenha(senha);
+
+            if (cliente != null) {
                 Sessao.setClienteLogado(cliente);
-
                 JOptionPane.showMessageDialog(this, "Login bem-sucedido!");
                 new TelaMenuPrincipal().setVisible(true);
                 dispose();
-
             } else {
                 JOptionPane.showMessageDialog(this, "Usuário ou senha incorretos!");
             }
         });
+
 
         // Ação do botão Cadastrar
         btnCadastrar.addActionListener(e -> {

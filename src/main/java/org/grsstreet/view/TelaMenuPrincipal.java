@@ -44,7 +44,6 @@ public class TelaMenuPrincipal extends JFrame {
 
         botaoProdutos.addActionListener(e -> {
             dispose(); // Fecha esta tela
-
             new TelaProdutos().setVisible(true); // Abre a tela de produtos
         });
 
@@ -59,6 +58,16 @@ public class TelaMenuPrincipal extends JFrame {
         painelPrincipal.add(botaoCarrinho);
         painelPrincipal.add(Box.createRigidArea(new Dimension(0, 30)));
 
+        botaoCarrinho.addActionListener(e -> {
+            ClienteEntity clienteLogado = Sessao.getClienteLogado();
+            if (clienteLogado == null) {
+                JOptionPane.showMessageDialog(this, "Você precisa estar logado para acessar o carrinho.");
+                return;
+            }
+            this.dispose();
+            new TelaCarrinho(clienteLogado).setVisible(true);
+        });
+
         // Botão Suporte
         JButton botaoSuporte = new JButton("Suporte ao Cliente");
         botaoSuporte.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -67,15 +76,22 @@ public class TelaMenuPrincipal extends JFrame {
         painelPrincipal.add(botaoSuporte);
         painelPrincipal.add(Box.createRigidArea(new Dimension(0, 30)));
 
+        botaoSuporte.addActionListener(e -> {
+            dispose(); // Fecha esta tela
+            new TelaSuporte().setVisible(true); // Abre a tela de produtos
+        });
+
         // Botão Segurança
         JButton botaoSeguranca = new JButton("Segurança e Privacidade");
         botaoSeguranca.setAlignmentX(Component.CENTER_ALIGNMENT);
         botaoSeguranca.setMaximumSize(new Dimension(500, 70));
         botaoSeguranca.setFont(new Font("Arial", Font.BOLD, 24));
         painelPrincipal.add(botaoSeguranca);
+
+        botaoSeguranca.addActionListener(e -> {
+            dispose(); // Fecha esta tela
+            new TelaSeguranca().setVisible(true); // Abre a tela de produtos
+        });
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new TelaMenuPrincipal().setVisible(true));
-    }
 }

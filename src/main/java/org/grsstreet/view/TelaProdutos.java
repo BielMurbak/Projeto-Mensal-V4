@@ -1,13 +1,9 @@
 package org.grsstreet.view;
 
-import org.grsstreet.model.carrinho.CarrinhoEntity;
-import org.grsstreet.model.carrinho.ItemCarrinhoEntity;
 import org.grsstreet.model.product.ProdutoEntity;
 import org.grsstreet.model.user.ClienteEntity;
-import org.grsstreet.repository.CarrinhoRepository;
-import org.grsstreet.repository.ItemCarrinhoRepository;
-import org.grsstreet.repository.ProdutoRepository;
 import org.grsstreet.session.Sessao;
+import org.grsstreet.service.ProdutoService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,9 +11,7 @@ import java.util.List;
 
 public class TelaProdutos extends JFrame {
 
-    private ProdutoRepository produtoRepo = new ProdutoRepository();
-    private CarrinhoRepository carrinhoRepo = new CarrinhoRepository();
-    private ItemCarrinhoRepository itemCarrinhoRepo = new ItemCarrinhoRepository();
+    private ProdutoService produtoService = new ProdutoService();
 
     public TelaProdutos() {
 
@@ -26,18 +20,15 @@ public class TelaProdutos extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        List<ProdutoEntity> produtos = produtoRepo.listarTodos();
+        List<ProdutoEntity> produtos = produtoService.listarProdutos();
 
-        // Painel principal com BorderLayout
         JPanel painelPrincipal = new JPanel(new BorderLayout());
 
-        // Título centralizado no topo
         JLabel titulo = new JLabel("GR's Street", SwingConstants.CENTER);
         titulo.setFont(new Font("Arial", Font.BOLD, 36));
         titulo.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
         painelPrincipal.add(titulo, BorderLayout.NORTH);
 
-        // Painel de produtos (grid)
         JPanel painelProdutos = new JPanel();
         painelProdutos.setLayout(new GridLayout(0, 3, 15, 15));
         painelProdutos.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
@@ -50,7 +41,6 @@ public class TelaProdutos extends JFrame {
             ));
             painelProduto.setBackground(Color.WHITE);
 
-            // ProdutosLista
             JLabel imagemLabel;
             try {
                 ImageIcon icon = new ImageIcon(produto.getImagem());
@@ -58,10 +48,9 @@ public class TelaProdutos extends JFrame {
                 imagemLabel = new JLabel(new ImageIcon(img));
                 imagemLabel.setHorizontalAlignment(SwingConstants.CENTER);
             } catch (Exception e) {
-                imagemLabel = new JLabel("ProdutosLista não encontrada", SwingConstants.CENTER);
+                imagemLabel = new JLabel("Imagem não encontrada", SwingConstants.CENTER);
             }
 
-            // Nome, preço e quantidade centralizados
             JLabel nomeLabel = new JLabel(produto.getNome(), SwingConstants.CENTER);
             nomeLabel.setFont(new Font("Arial", Font.BOLD, 16));
             nomeLabel.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
@@ -75,7 +64,6 @@ public class TelaProdutos extends JFrame {
             quantidadeLabel.setFont(new Font("Arial", Font.PLAIN, 14));
             quantidadeLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
 
-            // Botão "Adicionar ao Carrinho"
             JButton btnAdicionar = new JButton("Adicionar ao Carrinho");
             btnAdicionar.setMaximumSize(new Dimension(180, 50));
             btnAdicionar.setFocusPainted(false);
@@ -106,15 +94,16 @@ public class TelaProdutos extends JFrame {
                     return;
                 }
 
-                if (qtd > produto.getQuantidade()) {
-                    JOptionPane.showMessageDialog(this, "Quantidade insuficiente em estoque.");
-                    return;
+                try {
+                    produtoService.adicionarAoCarrinho(clienteLogado, produto, qtd);
+                    JOptionPane.showMessageDialog(this, "Produto adicionado ao carrinho!");
+                    this.dispose();
+                    new TelaProdutos().setVisible(true); // atualizar tela para refletir estoque
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
                 }
-
-                adicionarAoCarrinho(clienteLogado, produto, qtd);
             });
 
-            // Painel de informações com layout vertical
             JPanel painelInfo = new JPanel();
             painelInfo.setLayout(new BoxLayout(painelInfo, BoxLayout.Y_AXIS));
             painelInfo.add(nomeLabel);
@@ -133,7 +122,6 @@ public class TelaProdutos extends JFrame {
         JScrollPane scrollPane = new JScrollPane(painelProdutos);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        // Botões inferiores
         JButton btnIrCarrinho = new JButton("Ir ao Carrinho");
         btnIrCarrinho.setFont(new Font("Arial", Font.BOLD, 18));
         btnIrCarrinho.setPreferredSize(new Dimension(200, 50));
@@ -167,51 +155,5 @@ public class TelaProdutos extends JFrame {
         painelPrincipal.add(painelInferior, BorderLayout.SOUTH);
 
         setContentPane(painelPrincipal);
-    }
-
-    private void adicionarAoCarrinho(ClienteEntity cliente, ProdutoEntity produto, int quantidade) {
-        CarrinhoEntity carrinho = carrinhoRepo.buscarCarrinhoAtivoPorCliente(cliente);
-
-        if (carrinho == null) {
-            carrinho = new CarrinhoEntity();
-            carrinho.setCliente(cliente);
-            carrinho.setFinalizado(false);
-            carrinhoRepo.salvar(carrinho);
-        }
-
-        // Verifica se o produto já está no carrinho para somar quantidades
-        ItemCarrinhoEntity itemExistente = null;
-        for (ItemCarrinhoEntity item : carrinho.getItens()) {
-            if (item.getProduto().getId().equals(produto.getId())) {
-                itemExistente = item;
-                break;
-            }
-        }
-
-        if (itemExistente != null) {
-            int novaQtd = itemExistente.getQuantidade() + quantidade;
-            if (novaQtd > produto.getQuantidade() + itemExistente.getQuantidade()) {
-                JOptionPane.showMessageDialog(this, "Quantidade insuficiente em estoque para adicionar mais.");
-                return;
-            }
-            itemExistente.setQuantidade(novaQtd);
-            itemCarrinhoRepo.atualizar(itemExistente);
-        } else {
-            ItemCarrinhoEntity novoItem = new ItemCarrinhoEntity();
-            novoItem.setCarrinho(carrinho);
-            novoItem.setProduto(produto);
-            novoItem.setQuantidade(quantidade);
-            itemCarrinhoRepo.salvar(novoItem);
-        }
-
-        // Atualiza estoque do produto (considerando a quantidade já no carrinho)
-        produto.setQuantidade(produto.getQuantidade() - quantidade);
-        // produtoRepo.atualizar(produto);
-
-        JOptionPane.showMessageDialog(this, "Produto adicionado ao carrinho!");
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new TelaProdutos().setVisible(true));
     }
 }

@@ -37,7 +37,7 @@ public class Main {
             PessoaEntity pessoaAdm = new PessoaEntity();
 
             pessoaCliente.setTipo(TipoPessoa.CLIENTE);
-            pessoaCliente.setNome("Adryan Jacinto");
+            pessoaCliente.setNome("biel");
             pessoaCliente.setCpf("279.641.580-40");
             pessoaCliente.setDataDeNascimento(LocalDate.of(2006, 7, 25));
 
@@ -47,7 +47,7 @@ public class Main {
             endereco.setCep("85850-111");
             endereco.setEstado("PR");
 
-            cliente.setSenha("2507@");
+            cliente.setSenha("123");
             cliente.setPessoa(pessoaCliente);
             cliente.setEnderecoEntity(endereco);
 

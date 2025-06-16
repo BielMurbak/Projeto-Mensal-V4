@@ -38,6 +38,19 @@ public class ProdutoRepository {
         }
     }
 
+    public void atualizar(ProdutoEntity produto) {
+        Transaction tx = null;
+        try (Session session = sessionFactory.openSession()) {
+            tx = session.beginTransaction();
+            session.update(produto);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
     public void deletarNomeProduto(String nome) {
         Session session = sessionFactory.openSession();
         Transaction transaction = null;

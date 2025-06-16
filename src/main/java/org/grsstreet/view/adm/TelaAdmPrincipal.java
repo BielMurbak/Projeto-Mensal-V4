@@ -30,7 +30,6 @@ public class TelaAdmPrincipal extends JFrame{
         sistemaAdm.setLayout(new BorderLayout());
 
 
-
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(headerColor);
         headerPanel.setPreferredSize(new Dimension(700, 60));

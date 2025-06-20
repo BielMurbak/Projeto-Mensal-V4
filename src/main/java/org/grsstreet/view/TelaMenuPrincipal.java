@@ -27,7 +27,6 @@ public class TelaMenuPrincipal extends JFrame {
         painelPrincipal.add(titulo);
 
         ClienteEntity cliente = Sessao.getClienteLogado();
-
         JLabel saudacao = new JLabel("Bem-vindo, " + cliente.getPessoa().getNome(), JLabel.CENTER);
         saudacao.setFont(new Font("Arial", Font.PLAIN, 26));
         saudacao.setAlignmentX(Component.CENTER_ALIGNMENT);

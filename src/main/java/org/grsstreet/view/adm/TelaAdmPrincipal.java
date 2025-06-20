@@ -1,5 +1,13 @@
 package org.grsstreet.view.adm;
 
+import org.grsstreet.model.enums.TipoPessoa;
+import org.grsstreet.model.user.AdministradorEntity;
+import org.grsstreet.model.user.ClienteEntity;
+import org.grsstreet.model.user.PessoaEntity;
+import org.grsstreet.repository.AdministradorRepository;
+import org.grsstreet.repository.ClienteRepository;
+import org.grsstreet.repository.PessoaRepository;
+import org.grsstreet.view.TelaLogin;
 import org.grsstreet.view.TelaMenuPrincipal;
 import org.grsstreet.view.adm.administrador.CadastrarAdm;
 import org.grsstreet.view.adm.administrador.ListarAdms;
@@ -13,6 +21,9 @@ import org.grsstreet.view.adm.produto.RemoverProduto;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDate;
+
+import static java.lang.System.exit;
 
 public class TelaAdmPrincipal extends JFrame{
 
@@ -49,7 +60,7 @@ public class TelaAdmPrincipal extends JFrame{
         String[]  botoes = {
                 "1-Cadastrar cliente", "2-Listar clientes", "3-Remover cliente",
                 "4-Cadastrar produto", "5-Listar produto", "6-Remover produto","7-Adicionar administrador","8-Listar administrador","9-Remover administrador",
-                "10-Acessar Sistema User ","11-Encerrar programa"
+                "10-Acessar Sistema User", "11-Encerrar programa" // <-- Sem espaços extras
 
         };
 
@@ -79,62 +90,72 @@ public class TelaAdmPrincipal extends JFrame{
 
             if (texto.equals("1-Cadastrar cliente")) {
                 btn.addActionListener(e -> {
+                    JOptionPane.showMessageDialog(this, "Acessando cadastrar cliente ");
                     new CadastrarCliente();
                     dispose();
                 });
             } else if (texto.equalsIgnoreCase("2-Listar clientes"))
             btn.addActionListener(e -> {
+                JOptionPane.showMessageDialog(this, "Acessando listar cliente ");
                 new ListarClientes();
                 dispose();
             });
             else if(texto.equalsIgnoreCase("3-Remover cliente"))
             btn.addActionListener(e -> {
+                JOptionPane.showMessageDialog(this, "Acessando remover cliente ");
                 new RemoverCliente();
                 dispose();
             });
 
-            else if(texto.equalsIgnoreCase("7-Adicionar administrado"))
+            else if(texto.equalsIgnoreCase("7-Adicionar administrador"))
                 btn.addActionListener(e -> {
+                    JOptionPane.showMessageDialog(this, "Acessando adicionar administrador ");
                     new CadastrarAdm();
                     dispose();
                 });
             else if(texto.equalsIgnoreCase("8-Listar administrador"))
                 btn.addActionListener(e -> {
+                    JOptionPane.showMessageDialog(this, "Acessando listar administrador ");
                     new ListarAdms();
                     dispose();
                 });
             else if(texto.equalsIgnoreCase("9-Remover administrador"))
                 btn.addActionListener(e -> {
+                    JOptionPane.showMessageDialog(this, "Acessando remover administrador ");
                     new RemoverAdm();
                     dispose();
                 });
             else if(texto.equalsIgnoreCase("4-Cadastrar Produto"))
                 btn.addActionListener(e -> {
+                    JOptionPane.showMessageDialog(this, "Acessando cadastrar produto ");
                     new CadastrarProduto();
                     dispose();
                 });
             else if(texto.equalsIgnoreCase("5-Listar produto"))
                 btn.addActionListener(e -> {
+                    JOptionPane.showMessageDialog(this, "Acessando listar produto ");
                     new ListarProdutos();
                     dispose();
                 });
             else if(texto.equalsIgnoreCase("6-Remover produto"))
                 btn.addActionListener(e -> {
+                    JOptionPane.showMessageDialog(this, "Acessando remover produto ");
                     new RemoverProduto();
                     dispose();
 
                 });
-            else if(texto.equalsIgnoreCase("10-Acessar Sistema User"))
+            else if(texto.equalsIgnoreCase("10-Acessar Sistema User")) {
                 btn.addActionListener(e -> {
-                    new TelaMenuPrincipal();
+                    JOptionPane.showMessageDialog(this, "Acessando sistema de login ");
+                   new TelaLogin();
                     dispose();
                 });
+            }
             else if(texto.equalsIgnoreCase("11-Encerrar programa"))
-                btn.addActionListener(e -> {
-                    dispose();
+                   btn.addActionListener(e -> {
+                       JOptionPane.showMessageDialog(this, "Encerrando programa ");
+                    exit(1);
                 });
-
-
         }
 
         JPanel footerPanel = new JPanel();

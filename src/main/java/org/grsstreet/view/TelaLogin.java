@@ -117,5 +117,6 @@ public class TelaLogin extends JFrame {
             dispose();
             new TelaCadastro().setVisible(true);
         });
+        setVisible(true); // <- ESSENCIAL PARA MOSTRAR A TELA!
     }
 }

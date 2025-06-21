@@ -60,7 +60,7 @@ public class TelaAdmPrincipal extends JFrame{
         String[]  botoes = {
                 "1-Cadastrar cliente", "2-Listar clientes", "3-Remover cliente",
                 "4-Cadastrar produto", "5-Listar produto", "6-Remover produto","7-Adicionar administrador","8-Listar administrador","9-Remover administrador",
-                "10-Acessar Sistema User", "11-Encerrar programa" // <-- Sem espaços extras
+                "10-Acessar Sistema User", "11-Encerrar programa", "12-Acessar sistema de edicao" // <-- Sem espaços extras
 
         };
 
@@ -155,6 +155,10 @@ public class TelaAdmPrincipal extends JFrame{
                    btn.addActionListener(e -> {
                        JOptionPane.showMessageDialog(this, "Encerrando programa ");
                     exit(1);
+                });
+            else if(texto.equalsIgnoreCase("12-Acessar sistema de edicao"))
+                btn.addActionListener(e -> {
+
                 });
         }
 

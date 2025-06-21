@@ -79,22 +79,25 @@ public class ProdutoRepository {
         }
     }
 
-    public List<ProdutoEntity> buscarProdutosComPrecoMaximo() {
+    public List<ProdutoEntity> buscarProdutosComPrecoMaximo(double precoMaximo) {
         Session session = sessionFactory.openSession();
 
-        // 1. Primeiro, buscar o preço máximo na tabela
-        Double precoMaximo = session.createQuery("SELECT MAX(p.preco) FROM ProdutoEntity p", Double.class)
-                .getSingleResult();
-
-        // 2. Agora, buscar todos os produtos que têm esse preço máximo
         List<ProdutoEntity> produtos = session.createQuery(
-                        "FROM ProdutoEntity p WHERE p.preco = :precoMax", ProdutoEntity.class)
+                        "FROM ProdutoEntity p WHERE p.preco <= :precoMax", ProdutoEntity.class)
                 .setParameter("precoMax", precoMaximo)
                 .getResultList();
 
         session.close();
         return produtos;
     }
+
+    public long contarProdutos(){
+        Session session = sessionFactory.openSession();
+        long total = (long) session.createQuery("Select count (p) from ProdutoEntity p").getSingleResult();
+        session.close();
+        return total;
+    }
+
 
     public List<ProdutoEntity> buscarPorParcialNome(String nome) {
         Session session = sessionFactory.openSession();

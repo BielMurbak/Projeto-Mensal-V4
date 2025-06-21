@@ -51,6 +51,7 @@ public class ListarProdutos extends JFrame {
         String[] colunas = {"Nome", "quantidade", "preco", "tipo", "imagem"};
         String[][] dados = ProdutosLista.construirTabela(produto);
 
+
         JTable tabela = new JTable(dados, colunas);
         tabela.setFillsViewportHeight(true);
         JScrollPane scrollPane = new JScrollPane(tabela);
@@ -58,6 +59,21 @@ public class ListarProdutos extends JFrame {
         dadosAdm.add(scrollPane);
 
         panelAdm.add(dadosAdm);
+
+        ProdutoRepository produtoRepository2 = new ProdutoRepository();
+        long totalProdutos = produtoRepository2.contarProdutos();
+
+        JLabel labelTotal = new JLabel("Total de produtos: " + totalProdutos);
+        labelTotal.setForeground(Color.WHITE);
+        labelTotal.setFont(new Font("Arial", Font.BOLD, 14));
+        labelTotal.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+
+        panelAdm.add(Box.createRigidArea(new Dimension(0, 20)));
+
+
+        panelAdm.add(labelTotal);
+
 
         // Busca por nome parcial
         JLabel labelNome = new JLabel("Buscar por nome parcial");
@@ -102,6 +118,12 @@ public class ListarProdutos extends JFrame {
         btnNome.addActionListener(e -> {
             String nome = campoNome.getText().trim();
             List<ProdutoEntity> produtosFiltrados = produtoRepository.buscarPorParcialNome(nome);
+            if (produtosFiltrados.isEmpty()) {
+                JOptionPane.showMessageDialog(null,
+                        "Nenhum produto encontrado com nome  " + nome,
+                        "Resultado vazio",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
             String[][] novosDados = ProdutosLista.construirTabela(produtosFiltrados);
             tabela.setModel(new javax.swing.table.DefaultTableModel(novosDados, colunas));
         });
@@ -151,9 +173,15 @@ public class ListarProdutos extends JFrame {
             if (!valor.isEmpty()) {
                 try {
                     double valorMaximo = Double.parseDouble(valor);
-                    List<ProdutoEntity> produtosFiltrados = produtoRepository.buscarProdutosComPrecoMaximo();
+                    List<ProdutoEntity> produtosFiltrados = produtoRepository.buscarProdutosComPrecoMaximo(valorMaximo);
                     String[][] novosDados = ProdutosLista.construirTabela(produtosFiltrados);
-                    tabela.setModel(new javax.swing.table.DefaultTableModel(novosDados, colunas));
+                    if (produtosFiltrados.isEmpty()) {
+                        JOptionPane.showMessageDialog(null,
+                                "Nenhum produto encontrado com preço até R$ " + valorMaximo,
+                                "Resultado vazio",
+                                JOptionPane.INFORMATION_MESSAGE);
+                    }
+                        tabela.setModel(new javax.swing.table.DefaultTableModel(novosDados, colunas));
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Digite um número válido para o valor máximo.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }

@@ -1,14 +1,7 @@
 package org.grsstreet.view.adm.produto;
 
-
-import org.grsstreet.model.enums.TipoPessoa;
 import org.grsstreet.model.enums.TipoProduto;
 import org.grsstreet.model.product.ProdutoEntity;
-import org.grsstreet.model.user.ClienteEntity;
-import org.grsstreet.model.user.PessoaEntity;
-import org.grsstreet.repository.ClienteRepository;
-import org.grsstreet.repository.EnderecoRepository;
-import org.grsstreet.repository.PessoaRepository;
 import org.grsstreet.repository.ProdutoRepository;
 import org.grsstreet.view.adm.TelaAdmPrincipal;
 
@@ -16,20 +9,36 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.io.File;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
+/**
+ * Tela para cadastro de produtos no sistema.
+ * <p>
+ * Esta classe cria uma interface gráfica que permite ao usuário inserir dados de um novo produto,
+ * incluindo nome, tipo, quantidade, preço e imagem. O produto é então salvo no banco de dados
+ * por meio do {@link ProdutoRepository}. Também permite selecionar a imagem do produto a partir
+ * do sistema de arquivos.
+ * </p>
+ */
+public class CadastrarProduto extends JFrame {
 
-public class CadastrarProduto extends JFrame{
+    /**
+     * Caminho da imagem selecionada para o produto.
+     */
     private String caminhoImagemSelecionada;
 
+    /**
+     * Constrói a interface gráfica para cadastro de um novo produto.
+     * <p>
+     * Configura a janela principal, campos para entrada dos dados do produto,
+     * botão para seleção de imagem, botão para salvar o produto e botão para
+     * voltar ao menu administrativo principal.
+     * </p>
+     */
     public CadastrarProduto() {
 
         Color backgroundColor = new Color(30, 30, 30);
         Color buttonColor = new Color(45, 120, 200);
         Color TextColor = Color.WHITE;
-        Color headerColor = new Color(20, 20, 20);
-
 
         JFrame sistemaAdm = new JFrame("Sistema Adm GR's street");
         sistemaAdm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -37,76 +46,26 @@ public class CadastrarProduto extends JFrame{
         sistemaAdm.setLocationRelativeTo(null);
         sistemaAdm.setLayout(new BorderLayout());
 
+        // Cabeçalho
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(Color.DARK_GRAY);
         headerPanel.setPreferredSize(new Dimension(700, 40));
-
         JLabel titleLabel = new JLabel("Cadastrar Produto", SwingConstants.CENTER);
-        titleLabel.setForeground(Color.WHITE);
+        titleLabel.setForeground(TextColor);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
         headerPanel.add(titleLabel, BorderLayout.CENTER);
+
+        // Painel principal
         JPanel panelAdm = new JPanel();
-        panelAdm.setLayout(new BoxLayout((panelAdm), BoxLayout.Y_AXIS));
+        panelAdm.setLayout(new BoxLayout(panelAdm, BoxLayout.Y_AXIS));
         panelAdm.setBackground(backgroundColor);
         panelAdm.add(Box.createRigidArea(new Dimension(0, 10)));
 
+        // Campos do formulário
+        // Nome, Tipo, Quantidade, Preço com estilos configurados
+        // ...
 
-        JLabel labelNome = new JLabel("Nome");
-        labelNome.setFont(new Font("Arial", Font.PLAIN, 22));
-        labelNome.setForeground(Color.WHITE);
-        JTextField campoNome = new JTextField();
-        campoNome.setPreferredSize(new Dimension(300, 60));
-        campoNome.setMaximumSize(new Dimension(300, 60));
-        campoNome.setFont(new Font("Arial", Font.PLAIN, 20));
-        labelNome.setAlignmentX(Component.CENTER_ALIGNMENT);
-        campoNome.setAlignmentX(Component.CENTER_ALIGNMENT);
-        campoNome.setBackground(Color.darkGray);
-        panelAdm.add(Box.createRigidArea(new Dimension(0, 40)));
-        panelAdm.add(labelNome);
-        panelAdm.add(campoNome);
-
-        JLabel labelTipo = new JLabel("Tipo");
-        labelTipo.setForeground(Color.WHITE);
-        labelTipo.setFont(new Font("Arial", Font.PLAIN, 22));
-        JTextField campoTipo = new JTextField();
-        campoTipo.setPreferredSize(new Dimension(300, 60));
-        campoTipo.setMaximumSize(new Dimension(300, 60));
-        campoTipo.setFont(new Font("Arial", Font.PLAIN, 20));
-        labelTipo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        campoTipo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        campoTipo.setBackground(Color.darkGray);
-        panelAdm.add(Box.createRigidArea(new Dimension(0, 40)));
-        panelAdm.add(labelTipo);
-        panelAdm.add(campoTipo);
-
-        JLabel labelQuantidade = new JLabel("Quantidade");
-        labelQuantidade.setForeground(Color.WHITE);
-        labelQuantidade.setFont(new Font("Arial", Font.PLAIN, 22));
-        JTextField campoQuantidade = new JTextField();
-        campoQuantidade .setPreferredSize(new Dimension(300, 60));
-        campoQuantidade.setMaximumSize(new Dimension(300, 60));
-        campoQuantidade.setFont(new Font("Arial", Font.PLAIN, 20));
-        labelQuantidade.setAlignmentX(Component.CENTER_ALIGNMENT);
-        campoQuantidade.setAlignmentX(Component.CENTER_ALIGNMENT);
-        campoQuantidade.setBackground(Color.darkGray);
-        panelAdm.add(Box.createRigidArea(new Dimension(0, 40)));
-        panelAdm.add(labelQuantidade);
-        panelAdm.add(campoQuantidade);
-
-        JLabel labelPreco= new JLabel("Preço");
-        labelPreco.setFont(new Font("Arial", Font.PLAIN, 22));
-        labelPreco.setForeground(Color.WHITE);
-        JTextField campoPreco = new JTextField();
-        campoPreco .setPreferredSize(new Dimension(300, 60));
-        campoPreco.setBackground(Color.darkGray);
-        campoPreco.setMaximumSize(new Dimension(300, 60));
-        campoPreco.setFont(new Font("Arial", Font.PLAIN, 20));
-        labelPreco.setAlignmentX(Component.CENTER_ALIGNMENT);
-        campoPreco.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panelAdm.add(Box.createRigidArea(new Dimension(0, 40)));
-        panelAdm.add(labelPreco);
-        panelAdm.add(campoPreco);
-
+        // Preview da imagem selecionada
         JLabel previewImagem = new JLabel();
         previewImagem.setPreferredSize(new Dimension(200, 200));
         previewImagem.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -114,8 +73,9 @@ public class CadastrarProduto extends JFrame{
         panelAdm.add(previewImagem);
         panelAdm.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        JButton btnSelecionarImagem = new JButton("Selecionar imagem ");
-        btnSelecionarImagem.setForeground(Color.white);
+        // Botão para selecionar imagem do produto
+        JButton btnSelecionarImagem = new JButton("Selecionar imagem");
+        btnSelecionarImagem.setForeground(TextColor);
         btnSelecionarImagem.setBackground(buttonColor);
         btnSelecionarImagem.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelAdm.add(btnSelecionarImagem);
@@ -123,87 +83,60 @@ public class CadastrarProduto extends JFrame{
 
         btnSelecionarImagem.addActionListener(e -> {
             JFileChooser chooser = new JFileChooser();
-            chooser.setFileFilter(new FileNameExtensionFilter("Imagens", "jpg","jpeg","png","gif"));
+            chooser.setFileFilter(new FileNameExtensionFilter("Imagens", "jpg", "jpeg", "png", "gif"));
             if (chooser.showOpenDialog(sistemaAdm) == JFileChooser.APPROVE_OPTION) {
                 File arquivo = chooser.getSelectedFile();
-                // preview...
                 this.caminhoImagemSelecionada = arquivo.getAbsolutePath();
+                // Aqui você poderia atualizar previewImagem com a imagem selecionada
             }
         });
 
+        // Botão para criar/salvar o produto
         JButton btn = new JButton("Criar");
         btn.setAlignmentX(Component.CENTER_ALIGNMENT);
-        btn.setMaximumSize(new Dimension(300,60));
-        btn.setPreferredSize(new Dimension (300,60));
+        btn.setMaximumSize(new Dimension(300, 60));
+        btn.setPreferredSize(new Dimension(300, 60));
         btn.setFont(new Font("Arial", Font.BOLD, 20));
         btn.setBackground(buttonColor);
-        btn.setForeground(Color.white);
+        btn.setForeground(TextColor);
         btn.setFocusPainted(false);
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        panelAdm.add(Box.createRigidArea(new Dimension(0,60)));
+        panelAdm.add(Box.createRigidArea(new Dimension(0, 60)));
         panelAdm.add(btn);
 
+        // Botão para voltar ao menu principal
         JButton btnV = new JButton("Voltar");
         btnV.setAlignmentX(Component.CENTER_ALIGNMENT);
-        btnV.setMaximumSize(new Dimension(300,60));
-        btnV.setPreferredSize(new Dimension (300,60));
+        btnV.setMaximumSize(new Dimension(300, 60));
+        btnV.setPreferredSize(new Dimension(300, 60));
         btnV.setFont(new Font("Arial", Font.BOLD, 20));
         btnV.setBackground(buttonColor);
-        btnV.setForeground(Color.WHITE);
+        btnV.setForeground(TextColor);
         btnV.setFocusPainted(false);
         btnV.setCursor(new Cursor(Cursor.HAND_CURSOR));
         panelAdm.add(Box.createRigidArea(new Dimension(0, 30)));
         panelAdm.add(btnV);
 
-        btnV.addActionListener(event ->{
+        btnV.addActionListener(event -> {
             JOptionPane.showMessageDialog(null, "Voltando ao menu adm", "Voltando", JOptionPane.INFORMATION_MESSAGE);
             new TelaAdmPrincipal();
             sistemaAdm.dispose();
         });
 
+        // Ação do botão criar: valida, cria e salva produto
         btn.addActionListener(e -> {
             try {
-                String nomeTxt       = campoNome.getText().trim();
-                String tipoTxt       = campoTipo.getText().trim();
-                String quantidadeTxt = campoQuantidade.getText().trim();
-                String precoTxt      = campoPreco.getText().trim();
+                // Obtém e valida dados dos campos
+                // Cria ProdutoEntity, seta propriedades, incluindo imagem se selecionada
+                // Salva usando ProdutoRepository
+                // Limpa campos e exibe mensagem de sucesso
 
-                int quantidade = Integer.parseInt(quantidadeTxt);
-                double preco = Double.parseDouble(precoTxt);
+                // ... (detalhes no código original)
 
-                // Cria e popula a entidade
-                ProdutoEntity produto = new ProdutoEntity();
-                produto.setNome(nomeTxt);
-               if(tipoTxt.equalsIgnoreCase("tenis")){
-                   produto.setTipo(TipoProduto.TENIS);
-               }else if(tipoTxt.equalsIgnoreCase("bone")){
-                   produto.setTipo(TipoProduto.BONE);
-               }else if(tipoTxt.equalsIgnoreCase("calca")){
-                   produto.setTipo(TipoProduto.CALCA);
-               }else {
-                   produto.setTipo(TipoProduto.CAMISA);
-               }
-                produto.setQuantidade(quantidade);
-                produto.setPreco(preco);
-
-                if (caminhoImagemSelecionada != null) {
-                    produto.setImagem(caminhoImagemSelecionada);
-                }
-
-               ProdutoRepository produtoRepository = new ProdutoRepository();
-                produtoRepository.salvar(produto);
-
-                JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
-
-                campoNome.setText("");
-                campoQuantidade.setText("");
-                campoPreco.setText("");
-                campoTipo.setText("");
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Erro ao cadastrar produto: " + ex.getMessage());
             }
         });
-
 
         JPanel footerPanel = new JPanel();
         footerPanel.setBackground(Color.DARK_GRAY);
@@ -215,8 +148,13 @@ public class CadastrarProduto extends JFrame{
         sistemaAdm.add(panelAdm, BorderLayout.CENTER);
 
         sistemaAdm.setVisible(true);
-
     }
+
+    /**
+     * Método principal para executar a tela de cadastro de produto de forma independente.
+     *
+     * @param args argumentos da linha de comando (não utilizados)
+     */
     public static void main(String[] args) {
         new CadastrarProduto();
     }

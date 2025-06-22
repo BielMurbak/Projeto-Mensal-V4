@@ -56,7 +56,7 @@ public class ListarClientes extends JFrame{
         PessoaRepository pessoaRepository = new PessoaRepository();
 
         List<ClienteEntity> clientes = clienteRepository.listarTodosClientes();
-        List<PessoaEntity> pessoas = pessoaRepository.listarTodosPessoas();
+        List<PessoaEntity> pessoas = pessoaRepository.listarSomenteClientes();
         List<EnderecoEntity> enderecos = enderecoRepository.listarEnderecoPessoas();
 
         String[] colunas = {"Nome", "Cpf", "data de nascimento","senha","rua","bairro","municipio","estado","Cep"};
@@ -78,7 +78,7 @@ public class ListarClientes extends JFrame{
 
         panelAdm.add(footerPanel);
 
-
+        // Rodapé e botão Voltar
         JButton btnV = new JButton("Voltar");
         btnV.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnV.setMaximumSize(new Dimension(300,60));
@@ -99,14 +99,17 @@ public class ListarClientes extends JFrame{
 
         panelAdm.add(Box.createRigidArea(new Dimension(0, 50))); // espaço abaixo do botão
 
-
         // Adiciona os painéis à janela
         sistemaAdm.add(headerPanel, BorderLayout.NORTH);
         sistemaAdm.add(panelAdm, BorderLayout.CENTER);
 
         sistemaAdm.setVisible(true);
     }
-
+    /**
+     * Método principal que permite executar esta tela de forma isolada.
+     *
+     * @param args argumentos de linha de comando (não utilizados).
+     */
     public static void main(String[] args) {
         new ListarClientes();
     }

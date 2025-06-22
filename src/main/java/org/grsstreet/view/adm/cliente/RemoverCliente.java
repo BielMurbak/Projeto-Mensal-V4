@@ -10,6 +10,10 @@ public class RemoverCliente extends JFrame{
 
     public RemoverCliente () {
 
+        /**
+         * Construtor responsável por montar toda a interface gráfica da tela
+         * de remoção de clientes. Define estilos, ações e organização dos componentes.
+         */
         Color backgroundColor = new Color(30, 30, 30);
         Color buttonColor = new Color(45, 120, 200);
         Color TextColor = Color.WHITE;

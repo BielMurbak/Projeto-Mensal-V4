@@ -12,7 +12,7 @@ public class CarrinhoRepository {
     private static final SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 
     /**
-     * Busca um carrinho ativo (não finalizado) para o cliente informado.
+     * Busca um carrinho ativo (não finalizado) para o cliente informado..
      */
     public CarrinhoEntity buscarCarrinhoAtivoPorCliente(ClienteEntity cliente) {
         try (Session session = sessionFactory.openSession()) {

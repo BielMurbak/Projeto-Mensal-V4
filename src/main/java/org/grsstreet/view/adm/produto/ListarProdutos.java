@@ -9,20 +9,30 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
+/**
+ * Classe responsável pela interface gráfica para listar produtos no sistema administrativo.
+ * Permite visualizar, buscar por nome parcial ou por preço máximo, e voltar ao menu principal.
+ */
 public class ListarProdutos extends JFrame {
 
+    /**
+     * Construtor que inicializa a interface com tabela de produtos,
+     * campos de busca e botão de navegação para voltar ao menu principal.
+     */
     public ListarProdutos() {
+        // Definição de cores usadas na interface
         Color backgroundColor = new Color(30, 30, 30);
         Color buttonColor = new Color(45, 120, 200);
         Color TextColor = Color.WHITE;
 
+        // Criação da janela principal
         JFrame sistemaAdm = new JFrame("Sistema Adm GR's street");
         sistemaAdm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         sistemaAdm.setSize(1080, 720);
         sistemaAdm.setLocationRelativeTo(null);
         sistemaAdm.setLayout(new BorderLayout());
 
-        // Cabeçalho
+        // Cabeçalho da janela
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(Color.DARK_GRAY);
         headerPanel.setPreferredSize(new Dimension(700, 40));
@@ -32,26 +42,29 @@ public class ListarProdutos extends JFrame {
         titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
         headerPanel.add(titleLabel, BorderLayout.CENTER);
 
-        // Painel principal
+        // Painel principal que contém todos os componentes da tela
         JPanel panelAdm = new JPanel();
         panelAdm.setLayout(new BoxLayout(panelAdm, BoxLayout.Y_AXIS));
         panelAdm.setBackground(backgroundColor);
         panelAdm.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        // Painel com os dados da tabela
+        // Painel que contém a tabela de produtos
         JPanel dadosAdm = new JPanel();
         dadosAdm.setLayout(new BoxLayout(dadosAdm, BoxLayout.Y_AXIS));
         dadosAdm.setBackground(backgroundColor);
         dadosAdm.setMaximumSize(new Dimension(1000, 400));
         dadosAdm.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        // Instancia o repositório para buscar os produtos
         ProdutoRepository produtoRepository = new ProdutoRepository();
         List<ProdutoEntity> produto = produtoRepository.listarTenis();
 
+        // Definição das colunas da tabela
         String[] colunas = {"Nome", "quantidade", "preco", "tipo", "imagem"};
+        // Dados da tabela construídos a partir da lista de produtos
         String[][] dados = ProdutosLista.construirTabela(produto);
 
-
+        // Criação da tabela e seu painel de rolagem
         JTable tabela = new JTable(dados, colunas);
         tabela.setFillsViewportHeight(true);
         JScrollPane scrollPane = new JScrollPane(tabela);
@@ -60,6 +73,7 @@ public class ListarProdutos extends JFrame {
 
         panelAdm.add(dadosAdm);
 
+        // Consulta o total de produtos para exibir na interface
         ProdutoRepository produtoRepository2 = new ProdutoRepository();
         long totalProdutos = produtoRepository2.contarProdutos();
 
@@ -68,14 +82,10 @@ public class ListarProdutos extends JFrame {
         labelTotal.setFont(new Font("Arial", Font.BOLD, 14));
         labelTotal.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-
         panelAdm.add(Box.createRigidArea(new Dimension(0, 20)));
-
-
         panelAdm.add(labelTotal);
 
-
-        // Busca por nome parcial
+        // Configuração da busca por nome parcial
         JLabel labelNome = new JLabel("Buscar por nome parcial");
         labelNome.setFont(new Font("Arial", Font.PLAIN, 22));
         labelNome.setForeground(TextColor);
@@ -99,7 +109,7 @@ public class ListarProdutos extends JFrame {
         btnNome.setPreferredSize(new Dimension(120, 40));
         btnNome.setMaximumSize(new Dimension(120, 40));
 
-        // Painel horizontal para nome e botão
+        // Painel horizontal para o campo e botão de busca por nome
         JPanel buscaNomePanel = new JPanel();
         buscaNomePanel.setLayout(new BoxLayout(buscaNomePanel, BoxLayout.X_AXIS));
         buscaNomePanel.setBackground(backgroundColor);
@@ -115,6 +125,7 @@ public class ListarProdutos extends JFrame {
         panelAdm.add(Box.createRigidArea(new Dimension(0, 5)));
         panelAdm.add(buscaNomePanel);
 
+        // Ação do botão de busca por nome parcial
         btnNome.addActionListener(e -> {
             String nome = campoNome.getText().trim();
             List<ProdutoEntity> produtosFiltrados = produtoRepository.buscarPorParcialNome(nome);
@@ -128,7 +139,7 @@ public class ListarProdutos extends JFrame {
             tabela.setModel(new javax.swing.table.DefaultTableModel(novosDados, colunas));
         });
 
-        // Busca por valor máximo
+        // Configuração da busca por valor máximo
         JLabel labelValorMaximo = new JLabel("Buscar por valor máximo");
         labelValorMaximo.setFont(new Font("Arial", Font.PLAIN, 22));
         labelValorMaximo.setForeground(TextColor);
@@ -152,7 +163,7 @@ public class ListarProdutos extends JFrame {
         btnValorMaximo.setPreferredSize(new Dimension(120, 40));
         btnValorMaximo.setMaximumSize(new Dimension(120, 40));
 
-        // Painel horizontal para valor máximo e botão
+        // Painel horizontal para o campo e botão de busca por valor máximo
         JPanel buscaValorPanel = new JPanel();
         buscaValorPanel.setLayout(new BoxLayout(buscaValorPanel, BoxLayout.X_AXIS));
         buscaValorPanel.setBackground(backgroundColor);
@@ -168,6 +179,7 @@ public class ListarProdutos extends JFrame {
         panelAdm.add(Box.createRigidArea(new Dimension(0, 5)));
         panelAdm.add(buscaValorPanel);
 
+        // Ação do botão de busca por valor máximo
         btnValorMaximo.addActionListener(e -> {
             String valor = campoValorMaximo.getText().trim();
             if (!valor.isEmpty()) {
@@ -181,19 +193,19 @@ public class ListarProdutos extends JFrame {
                                 "Resultado vazio",
                                 JOptionPane.INFORMATION_MESSAGE);
                     }
-                        tabela.setModel(new javax.swing.table.DefaultTableModel(novosDados, colunas));
+                    tabela.setModel(new javax.swing.table.DefaultTableModel(novosDados, colunas));
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Digite um número válido para o valor máximo.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                // Se o campo estiver vazio, exibir todos os produtos ou limpar filtro
+                // Caso campo vazio, recarrega todos os produtos
                 List<ProdutoEntity> produtos = produtoRepository.listarTenis();
                 String[][] novosDados = ProdutosLista.construirTabela(produtos);
                 tabela.setModel(new javax.swing.table.DefaultTableModel(novosDados, colunas));
             }
         });
 
-        // Botão Voltar
+        // Botão para voltar ao menu administrativo principal
         JButton btnV = new JButton("Voltar");
         btnV.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnV.setMaximumSize(new Dimension(300, 60));
@@ -208,19 +220,25 @@ public class ListarProdutos extends JFrame {
         panelAdm.add(btnV);
         panelAdm.add(Box.createRigidArea(new Dimension(0, 50))); // espaço abaixo do botão
 
+        // Ação do botão voltar: fecha esta tela e abre tela administrativa principal
         btnV.addActionListener(e -> {
             JOptionPane.showMessageDialog(null, "Voltando ao menu adm", "Voltando", JOptionPane.INFORMATION_MESSAGE);
             new TelaAdmPrincipal();
             sistemaAdm.dispose();
         });
 
-        // Adiciona os painéis à janela
+        // Adiciona os painéis configurados na janela principal
         sistemaAdm.add(headerPanel, BorderLayout.NORTH);
         sistemaAdm.add(panelAdm, BorderLayout.CENTER);
 
+        // Torna a janela visível
         sistemaAdm.setVisible(true);
     }
 
+    /**
+     * Método principal para execução da aplicação.
+     * Inicializa a tela de listagem de produtos.
+     */
     public static void main(String[] args) {
         new ListarProdutos();
     }

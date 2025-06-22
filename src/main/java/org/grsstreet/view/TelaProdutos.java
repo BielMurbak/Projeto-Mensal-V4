@@ -9,10 +9,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
+/**
+ * TelaProdutos representa a interface gráfica da lista de produtos disponíveis para compra.
+ * Permite ao usuário visualizar produtos, adicionar quantidades ao carrinho, navegar ao carrinho e voltar ao menu principal.
+ */
 public class TelaProdutos extends JFrame {
 
     private ProdutoService produtoService = new ProdutoService();
 
+    /**
+     * Construtor que configura a interface da tela de produtos, listando todos os produtos disponíveis.
+     * Configura botões, imagens, preços e quantidade em estoque.
+     */
     public TelaProdutos() {
 
         setTitle("GR's Street - Produtos");
@@ -20,19 +28,24 @@ public class TelaProdutos extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        // Obtém lista de produtos cadastrados
         List<ProdutoEntity> produtos = produtoService.listarProdutos();
 
+        // Painel principal com BorderLayout
         JPanel painelPrincipal = new JPanel(new BorderLayout());
 
+        // Título no topo da tela
         JLabel titulo = new JLabel("GR's Street", SwingConstants.CENTER);
         titulo.setFont(new Font("Arial", Font.BOLD, 36));
         titulo.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
         painelPrincipal.add(titulo, BorderLayout.NORTH);
 
+        // Painel central que exibirá os produtos em grade 3 colunas
         JPanel painelProdutos = new JPanel();
         painelProdutos.setLayout(new GridLayout(0, 3, 15, 15));
         painelProdutos.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
+        // Para cada produto, cria um painel com imagem, nome, preço, estoque e botão para adicionar ao carrinho
         for (ProdutoEntity produto : produtos) {
             JPanel painelProduto = new JPanel(new BorderLayout());
             painelProduto.setBorder(BorderFactory.createCompoundBorder(
@@ -68,6 +81,7 @@ public class TelaProdutos extends JFrame {
             btnAdicionar.setMaximumSize(new Dimension(180, 50));
             btnAdicionar.setFocusPainted(false);
 
+            // Listener para o botão adicionar ao carrinho
             btnAdicionar.addActionListener(e -> {
                 ClienteEntity clienteLogado = Sessao.getClienteLogado();
                 if (clienteLogado == null) {
@@ -79,7 +93,7 @@ public class TelaProdutos extends JFrame {
                         "Informe a quantidade para o produto: " + produto.getNome(),
                         "Quantidade", JOptionPane.PLAIN_MESSAGE);
 
-                if (qtdStr == null) return; // Cancelou
+                if (qtdStr == null) return; // Usuário cancelou
 
                 int qtd;
                 try {
@@ -98,7 +112,7 @@ public class TelaProdutos extends JFrame {
                     produtoService.adicionarAoCarrinho(clienteLogado, produto, qtd);
                     JOptionPane.showMessageDialog(this, "Produto adicionado ao carrinho!");
                     this.dispose();
-                    new TelaProdutos().setVisible(true); // atualizar tela para refletir estoque
+                    new TelaProdutos().setVisible(true); // Atualiza a tela para refletir novo estoque
                 } catch (IllegalArgumentException ex) {
                     JOptionPane.showMessageDialog(this, ex.getMessage());
                 }
@@ -119,9 +133,11 @@ public class TelaProdutos extends JFrame {
             painelProdutos.add(painelProduto);
         }
 
+        // Scroll para os produtos, permitindo rolagem vertical
         JScrollPane scrollPane = new JScrollPane(painelProdutos);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
+        // Botões inferiores para navegar ao carrinho ou ao menu principal
         JButton btnIrCarrinho = new JButton("Ir ao Carrinho");
         btnIrCarrinho.setFont(new Font("Arial", Font.BOLD, 18));
         btnIrCarrinho.setPreferredSize(new Dimension(200, 50));
@@ -132,6 +148,7 @@ public class TelaProdutos extends JFrame {
         btnVoltarMenu.setPreferredSize(new Dimension(200, 50));
         btnVoltarMenu.setFocusPainted(false);
 
+        // Navega para a tela do carrinho se usuário estiver logado
         btnIrCarrinho.addActionListener(e -> {
             ClienteEntity clienteLogado = Sessao.getClienteLogado();
             if (clienteLogado == null) {
@@ -142,6 +159,7 @@ public class TelaProdutos extends JFrame {
             new TelaCarrinho(clienteLogado).setVisible(true);
         });
 
+        // Volta ao menu principal
         btnVoltarMenu.addActionListener(e -> {
             this.dispose();
             new TelaMenuPrincipal().setVisible(true);

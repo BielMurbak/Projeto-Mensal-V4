@@ -4,10 +4,22 @@ import org.grsstreet.model.product.ProdutoEntity;
 
 import java.util.List;
 
+/**
+ * Classe utilitária para construir uma tabela em formato de matriz String[][]
+ * a partir de uma lista de produtos.
+ */
 public class ProdutosLista {
 
+    /**
+     * Constrói uma matriz de dados com as informações dos produtos.
+     * Cada linha representa um produto e as colunas são:
+     * Nome, Preço, Imagem, Quantidade e Tipo do produto.
+     *
+     * @param produtos lista de produtos
+     * @return matriz String[][] com dados para exibição em tabela
+     */
     public static String[][] construirTabela(List<ProdutoEntity> produtos) {
-        // 5 colunas: Nome, Preço, Imagem, Quantidade, Código
+        // 5 colunas: Nome, Preço, Imagem, Quantidade, Tipo
         String[][] dados = new String[produtos.size()][5];
 
         for (int i = 0; i < produtos.size(); i++) {

@@ -9,27 +9,50 @@ import org.hibernate.cfg.Configuration;
 
 import java.util.List;
 
+/**
+ * Classe responsável por realizar operações no banco de dados
+ * para a entidade ProdutoEntity utilizando Hibernate.
+ */
 public class ProdutoRepository {
+
+    // Fábrica de sessões do Hibernate (singleton)
     private static final SessionFactory sessionFactory;
 
     static {
+        // Inicializa a SessionFactory a partir do hibernate.cfg.xml
         sessionFactory = new Configuration().configure().buildSessionFactory();
     }
 
+    /**
+     * Lista todos os produtos cadastrados.
+     *
+     * @return Lista de ProdutoEntity
+     */
     public List<ProdutoEntity> listarTodos() {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("FROM ProdutoEntity", ProdutoEntity.class).list();
         }
     }
 
+    /**
+     * Lista apenas os produtos do tipo TÊNIS.
+     *
+     * @return Lista de ProdutoEntity filtrados por tipo
+     */
     public List<ProdutoEntity> listarTenis() {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("FROM ProdutoEntity p WHERE p.tipo = :tipoProduto", ProdutoEntity.class)
+            return session.createQuery(
+                            "FROM ProdutoEntity p WHERE p.tipo = :tipoProduto", ProdutoEntity.class)
                     .setParameter("tipoProduto", TipoProduto.TENIS)
                     .list();
         }
     }
 
+    /**
+     * Salva um novo produto no banco.
+     *
+     * @param produto ProdutoEntity a ser salvo
+     */
     public void salvar(ProdutoEntity produto) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
@@ -38,6 +61,11 @@ public class ProdutoRepository {
         }
     }
 
+    /**
+     * Atualiza um produto existente.
+     *
+     * @param produto ProdutoEntity a ser atualizado
+     */
     public void atualizar(ProdutoEntity produto) {
         Transaction tx = null;
         try (Session session = sessionFactory.openSession()) {
@@ -51,6 +79,11 @@ public class ProdutoRepository {
         }
     }
 
+    /**
+     * Deleta um produto com base no nome.
+     *
+     * @param nome Nome do produto a ser deletado
+     */
     public void deletarNomeProduto(String nome) {
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
@@ -58,8 +91,9 @@ public class ProdutoRepository {
         try {
             transaction = session.beginTransaction();
 
+            // ⚠️ Correção importante: o nome da entidade deve estar correto (ProdutoEntity)
             ProdutoEntity produto = session
-                    .createQuery("FROM produto WHERE nome = :nome", ProdutoEntity.class)
+                    .createQuery("FROM ProdutoEntity WHERE nome = :nome", ProdutoEntity.class)
                     .setParameter("nome", nome)
                     .uniqueResult();
 
@@ -79,6 +113,12 @@ public class ProdutoRepository {
         }
     }
 
+    /**
+     * Busca produtos com preço menor ou igual ao valor informado.
+     *
+     * @param precoMaximo valor máximo do preço
+     * @return Lista de produtos encontrados
+     */
     public List<ProdutoEntity> buscarProdutosComPrecoMaximo(double precoMaximo) {
         Session session = sessionFactory.openSession();
 
@@ -91,14 +131,25 @@ public class ProdutoRepository {
         return produtos;
     }
 
-    public long contarProdutos(){
+    /**
+     * Conta a quantidade total de produtos cadastrados.
+     *
+     * @return número total de produtos
+     */
+    public long contarProdutos() {
         Session session = sessionFactory.openSession();
-        long total = (long) session.createQuery("Select count (p) from ProdutoEntity p").getSingleResult();
+        long total = (long) session.createQuery(
+                "SELECT COUNT(p) FROM ProdutoEntity p").getSingleResult();
         session.close();
         return total;
     }
 
-
+    /**
+     * Busca produtos que contenham parte do nome informado (busca parcial, case-insensitive).
+     *
+     * @param nome parte do nome
+     * @return Lista de produtos que correspondem
+     */
     public List<ProdutoEntity> buscarPorParcialNome(String nome) {
         Session session = sessionFactory.openSession();
         List<ProdutoEntity> produtos = session.createQuery(
@@ -108,5 +159,4 @@ public class ProdutoRepository {
         session.close();
         return produtos;
     }
-
 }

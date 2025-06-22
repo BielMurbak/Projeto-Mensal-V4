@@ -11,7 +11,7 @@ public class PagamentoService {
     }
 
     /**
-     * Calcula o valor final aplicando um desconto.
+     * Calcula o valor final aplicando um desconto..
      * Desconto deve ser negativo para reduzir (ex: -0.05 para 5% de desconto).
      */
     public double calcularValorComDesconto(double desconto) {

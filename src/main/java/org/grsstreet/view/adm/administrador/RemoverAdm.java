@@ -10,13 +10,17 @@ import java.awt.*;
     public class RemoverAdm extends JFrame{
 
         public RemoverAdm() {
-
+            // Cores do layout
             Color backgroundColor = new Color(30, 30, 30);
             Color buttonColor = new Color(45, 120, 200);
             Color TextColor = Color.WHITE;
             Color headerColor = new Color(20, 20, 20);
 
 
+            /**
+             * Construtor da interface RemoverAdm.
+             * Inicializa todos os componentes da tela e define as ações dos botões.
+             */
 
             JFrame sistemaAdm = new JFrame("Sistema Adm GR's street");
             sistemaAdm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -5,26 +5,28 @@ import org.grsstreet.model.product.ProdutoEntity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "item_carrinho")
+@Table(name = "item_carrinho") // Mapeia a entidade para a tabela "item_carrinho"
 public class ItemCarrinhoEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // ID gerado automaticamente
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "carrinho_id", nullable = false)
+    @ManyToOne // Muitos itens para um carrinho
+    @JoinColumn(name = "carrinho_id", nullable = false) // FK para carrinho
     private CarrinhoEntity carrinho;
 
-    @ManyToOne
-    @JoinColumn(name = "produto_id", nullable = false)
+    @ManyToOne // Muitos itens para um produto
+    @JoinColumn(name = "produto_id", nullable = false) // FK para produto
     private ProdutoEntity produto;
 
     @Column(nullable = false)
-    private int quantidade;
+    private int quantidade; // Quantidade do produto no carrinho
 
+    // Construtor padrão
     public ItemCarrinhoEntity() {}
 
+    // Construtor completo
     public ItemCarrinhoEntity(CarrinhoEntity carrinho, ProdutoEntity produto, int quantidade) {
         this.carrinho = carrinho;
         this.produto = produto;

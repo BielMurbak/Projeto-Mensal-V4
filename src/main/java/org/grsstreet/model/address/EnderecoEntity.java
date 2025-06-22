@@ -1,30 +1,30 @@
 package org.grsstreet.model.address;
 
 import javax.persistence.*;
-import java.util.List;
 
-@Entity(name = "endereco")
+@Entity(name = "endereco") // Mapeia a classe para a tabela 'endereco'
 public class EnderecoEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Gera ID automático
     private Long id;
 
-    @Column(name = "rua",nullable = false)
+    @Column(name = "rua", nullable = false) // Campo obrigatório: rua
     private String rua;
 
-    @Column(name = "bairro",nullable = false)
+    @Column(name = "bairro", nullable = false) // Campo obrigatório: bairro
     private String bairro;
 
-    @Column(name = "municipio" ,nullable = false)
-    private String  municipio;
+    @Column(name = "municipio", nullable = false) // Campo obrigatório: município
+    private String municipio;
 
-    @Column(name = "estado" ,nullable = false)
-    private String  estado;
+    @Column(name = "estado", nullable = false) // Campo obrigatório: estado
+    private String estado;
 
-    @Column(name = "cep" ,nullable = false)
+    @Column(name = "cep", nullable = false) // Campo obrigatório: CEP
     private String cep;
 
+    // Construtor com todos os campos (exceto ID)
     public EnderecoEntity(String rua, String bairro, String municipio, String estado, String cep) {
         this.rua = rua;
         this.bairro = bairro;
@@ -32,10 +32,12 @@ public class EnderecoEntity {
         this.estado = estado;
         this.cep = cep;
     }
+
+    // Construtor padrão obrigatório para JPA
     public EnderecoEntity() {
     }
 
-
+    // Getters e Setters
 
     public Long getId() {
         return id;
@@ -84,6 +86,4 @@ public class EnderecoEntity {
     public void setCep(String cep) {
         this.cep = cep;
     }
-
-
 }
